@@ -1,0 +1,16 @@
+body{
+	height: 100%;
+	background-color: grey;
+}
+
+#topbar{
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#logo{
+	background: url("../img/rev_logo_trans_bg.png") no-repeat;
+	background-size: 100% 100%;
+	height: 75px;
+	width: 250px;
+}
