@@ -7,10 +7,15 @@ body{
 	background-size: auto;
 	height: 100%;
 	padding: 10px;
+	text-align: center;
+	color: #333333;
 }
 
 #topbar{
+	position: fixed;
+	z-index: 1;
 	background-image: linear-gradient(to right, #ffffff, #fff6e6, #ffdb99, #ffa500);
+	width: 95%;
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
@@ -43,7 +48,7 @@ body{
 	border-radius: 50%;
 	padding: 10px 20px 10px 20px;
 	font-size: 2em;
-	box-shadow: 10px 10px 10px #555555;
+	box-shadow: inset 10px 10px 10px #999999;
 }
 
 #user{
@@ -53,12 +58,46 @@ body{
 	border-radius: 50%;
 	padding: 10px 20px 10px 20px;
 	font-size: 2em;
-	box-shadow: 10px 10px 10px #555555;
+	box-shadow: inset 10px 10px 10px #999999;
+}
+
+#welcome{
+	position: absolute;
+	width: 95%;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	font-size: 3em;
+	font-weight: 600;
 }
 
 #login_box{
-	margin: auto;
-	height: 200px;
-	width: 200px;
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	padding: 50px;
+	background-image: linear-gradient(to right, #fff6e6, #ffdb99);
+	box-shadow: 5px 5px 5px #999999;
+}
+
+.login_box_elements{
+	font-size: 2em;
+}
+
+.fadein{
+	animation: fadeinout .5s linear normal;
+}
+
+.fadeout{
+	animation: fadeinout .5s linear reverse;
+}
+
+@keyframes fadeinout{
+	0% {opacity: 0;}
+	100% {opacity: 1;}
 }
 
