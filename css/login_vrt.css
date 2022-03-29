@@ -4,7 +4,8 @@ html{
 
 body{
 	background: url("../img/table_radial_fade.png") no-repeat center center fixed;
-	background-size: auto;
+	background-size: auto 100%;
+	background-color: #eeeeee;
 	height: 100%;
 	padding: 10px;
 	text-align: center;
@@ -19,7 +20,7 @@ body{
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
-	box-shadow: 10px 10px 10px #999999;
+	box-shadow: 8px 8px 8px #555555;
 }
 
 #logo{
@@ -43,12 +44,14 @@ body{
 
 #login_button{
 	display: block;
-	background-color: white;
+	background-color: #eeeeee;
 	margin: auto;
 	border-radius: 50%;
 	padding: 10px 20px 10px 20px;
 	font-size: 2em;
-	box-shadow: inset 10px 10px 10px #999999;
+	font-weight: 600;
+	box-shadow: inset 8px 8px 8px #555555;
+	text-shadow: 5px 5px 5px #aaaaaa;
 }
 
 #user{
@@ -58,7 +61,8 @@ body{
 	border-radius: 50%;
 	padding: 10px 20px 10px 20px;
 	font-size: 2em;
-	box-shadow: inset 10px 10px 10px #999999;
+	box-shadow: inset 8px 8px 8px #555555;
+	text-shadow: 5px 5px 5px #aaaaaa
 }
 
 #welcome{
@@ -81,7 +85,78 @@ body{
 	transform: translate(-50%, -50%);
 	padding: 50px;
 	background-image: linear-gradient(to right, #fff6e6, #ffdb99);
-	box-shadow: 5px 5px 5px #999999;
+	box-shadow: 8px 8px 8px #555555;
+}
+
+#login_box_nav{
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.login_box_nav_button_focus{
+	outline: 2px solid #666666;
+	color: rgba(51,51,51,1);
+	width: 50%;
+	padding: 10px;
+	font-size: 1.5em;
+	font-weight: 600;
+}
+
+.login_box_nav_button_not{
+	outline: none;
+	color: rgba(51,51,51,0.5);
+	width: 50%;
+	padding: 10px;
+	font-size: 1.5em;
+	font-weight: 400;
+}
+
+#login_box_login{
+	display: block;
+}
+
+#login_box_register{
+	display: none;
+}
+
+#admin_box{
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	padding: 50px;
+	background-image: linear-gradient(to right, #fff6e6, #ffdb99);
+	box-shadow: 5px 5px 5px #555555;
+	font-weight: 600;
+}
+
+#admin_box_table{
+	background-color: #ffffff;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #666666 #999999 #cccccc #999999;
+	border-collapse: collapse;
+}
+
+td{
+	padding: 10px;
+	font-size: 1.5em;
+	font-weight: 500;
+}
+
+th{
+	padding: 10px;
+	font-size: 1.5em;
+}
+
+tr{
+	border: 1px solid black;
+}
+
+.user_roles{
+	max-width: 50px;
 }
 
 .login_box_elements{

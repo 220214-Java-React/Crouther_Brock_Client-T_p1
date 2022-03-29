@@ -31,20 +31,61 @@
 			Please login to begin.
 		</div>
 	
-		<form class="fadeout" id="login_box">
-			<label for="login_box_username" class="login_box_elements">Login/create account:</label>
+		<div class="fadeout" id="login_box">
+		
+			<div id="login_box_nav">
+				<div class="login_box_nav_button_focus" id="login_box_nav_login">Login</div>
+				<div class="login_box_nav_button_not" id="login_box_nav_register">Register</div>
+			</div>
+			
+			</br></br>
+			
+			<form id="login_box_login">
+				<label for="login_box_username" class="login_box_elements" style="font-size:1em;">(Chars allowed:  )</label>
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_login_username" type="text" size="25" maxlength="25" placeholder="username: Aa123_">
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_login_password" type="password" size="25" maxlength="25" placeholder="password: Aa123_">
+				</br>
+				</br>
+				<button type="button" id="login_box_login_submit">submit</button>
+			</form>
+			
+			<form id="login_box_register">
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_register_username" type="text" size="25" maxlength="25" placeholder="username">
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_register_password" type="password" size="25" maxlength="25" placeholder="password">
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_register_email" type="email" size="25" maxlength="50" placeholder="email">
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_register_fname" type="text" size="25" maxlength="25" placeholder="first name">
+				</br>
+				</br>
+				<input class="login_box_elements" id="login_box_register_lname" type="text" size="25" maxlength="25" placeholder="last name">
+				</br>
+				</br>
+				<button type="button" id="login_box_register_submit">submit</button>
+			</form>
+			
+		</div>
+		
+		
+		<div class="fadeout" id="admin_box">
+			
+			<div style="font-size: 2em;">User Administration:</div>
 			</br>
-			<label for="login_box_username" class="login_box_elements">(Chars allowed: Aa123_ )</label>
 			</br>
-			</br>
-			<input name="login_box_username" class="login_box_elements" id="login_box_username" type="text" size="25" maxlength="25" placeholder="username">
-			</br>
-			</br>
-			<input name="login_box_password" class="login_box_elements" id="login_box_password" type="password" size="25" maxlength="25" placeholder="password">
-			</br>
-			</br>
-			<button type="button" id="login_box_submit">submit</button>
-		</form>
+			<table id="admin_box_table">
+			</table>
+			
+		</div>
 		
 	</div>
 
