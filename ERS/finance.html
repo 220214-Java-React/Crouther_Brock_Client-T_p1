@@ -16,21 +16,39 @@
 
 	<!-- External Resources -->
 	<link rel="stylesheet" type="text/css" href="https://myles.works/css/AvantFlat.css">
-
 </head>
 
-<style type="text/css">
-	h1 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; } 
-	h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } 
-	p { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; } 
-	blockquote { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } 
-	pre { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
-</style>
+	<!-- Web Page Specific Styling that Contradicts General/External Guidline Defaults -->
+	<style type="text/css">
+		* { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
+
+		h1 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; }
+
+		h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } 
+		 
+		blockquote { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } 
+
+		pre { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
+
+		.hBK{
+			background-image: linear-gradient(to left, white, #ffffff, #fafafa, #ededed, #d3d3d3, lightgray);
+		}
+		.oBK{
+			background-image: linear-gradient(to left, #ffffff, #fff6e6, #ffdb99, #ffa500);
+		}
+		.center {
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		}
+	</style>
+
 
 <!-- Web Content -->
-<body style="background-image: linear-gradient(to right, #ffffff, #fff6e6, #ffdb99, #ffa500);">
+<body style="background-color: black;">
 
 
+	<!-- Navigation -->
 	<div class="fw-box" style="height: 10vh; background: black;">
 
 		<img style="padding: 2vh 2vw 2vh 2vw; display: inline-block; max-height: 10vh; width: auto;" src="https://revature.com/wp-content/themes/revature/imgs/logo-white-color.png">
@@ -38,11 +56,11 @@
 		<button style="border-radius: 0%; font-size: 1em; background: darkorange; float: right; margin: 2vh 2vw 2vh 2vw; padding: 2vh 2vw 2vh 2vw; display: inline-block; max-height: 10vh; width: auto;">
 			<strong>HOME<strong>
 		</button>
-
 	</div>
 
 
-	<section class="mw-box">
+	<!-- Header -->
+	<section class="fw-box hBK">
         <div id ="name" style="padding: 5%;">
             <h1 style="margin-bottom:0px;">Financial Manager</h1>
             <h3  style="margin:.5em; margin-left: 0px;"><i>Expense Reinbursement System Data</i></h3>
@@ -50,26 +68,33 @@
 	</section>
 
 
-	<div class="fw-box">
+	<!-- Welcome Message -->
+	<div class="fw-box" id="wm" style="min-height: 50vh; background-color: white;">
+
 		<div class="fb2c">
-			<div class="square embeddedItem ord2">
-				<form style="padding-top: 10vw; text-align: center; width: auto;" action="">
-				  <label for="urnm">Username:</label>
-				  <input type="text" id="urnm" name="urnm" value="Username"><br>
-				  <label for="pswd">Password:</label>
-				  <input type="text" id="pswd" name="pswd" value="Password"><br><br>
-				  <input type="submit" value="Submit">
-				</form>
+
+			<div class="square embeddedItem ord1 oBK">
+				<h1 style="font-size: 6em; line-height: 1em; padding-left: 5%;">Welcome Back</h1>
+				<h3 style="font-size: 3em; padding-left: 5%;">Username</h3>
+				<p style="font-size: 1.5em; line-height: 1em; padding: 5%;">To Review all Open and Close Reinbursements Click "Begin". <br><br>As a Financial Manager at Revature you'll be able to sort reimbursements by type or status, view specific reimbursement details, and choose to approve or deny active reinbursement request.</p>
+				<div class="center" style="padding-bottom: 5%;"><button style="width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">BEGIN</button></div>
 			</div>
 
-			<div class="embeddedItem square ord1"><img style="max-height: 50vh; width: auto;" src="https://revature.com/wp-content/uploads/2022/02/mobile-index-hero-img.png"></div>
+			<div class="embeddedItem square ord2">
+				<div class="center">
+					<div><img style="padding: 0%; height: 48vh; width: auto;" src="https://revature.com/wp-content/uploads/2022/02/mobile-index-hero-img.png"></div>
 
+				</div>
+				<div><p style="width: 100%; text-align: center;">Learn More</p></div>
+			</div>
 
-		
-		
+		</div>
 	</div>
 
-	<div id="footer" style="position:  absolute; bottom: 0; height: 8em; z-index: 999; width: 100%; background-color: black;">
+
+	<!-- Footer -->
+	<div id="footer" style="height: 8em; z-index: 999; width: 100%; background-color: black;">
+
 		<div style="display: inline-block; float: left; text-align: center; padding-left: 2%;">
 			<h3 style="color: white;">CONTACT US</h3>
 			<p style="color: white; display: inline-block;">info@revature.com <br>P#: 703 570 8181<br></p>
