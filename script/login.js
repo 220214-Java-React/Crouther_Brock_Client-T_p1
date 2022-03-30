@@ -2,31 +2,34 @@ function init(){
 
 	//a boolean to keep track of the windows orientation
 	var isMobile = false;
-	var user = {name: "", pwd: "", email: "", fname: "", lname: "", role: "pending", action: "register"};
+	var user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "1", action: "register"};
+	var users = [];
+	var usersNamePwdObject = {};
 	var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
-	var users = [{
-		name: "admin",
-		pwd: "admin",
-		role: "admin"
-	},{
-		name: "asdf",
-		pwd: "asdf",
-		role: "mngr"
-	},{
-		name: "fdsa",
-		pwd: "fdsa",
-		role: "pending"
-	},{
-		name: "shirley",
-		pwd: "shirley",
-		role: "pending"
-	}];
+	var roles = ["pending", "admin", "mngr", "emp"];//use indexof + 1 to get ROLE_ID or vice versa
+	// var users = [{
+		// name: "admin",
+		// pwd: "admin",
+		// role: "admin"
+	// },{
+		// name: "asdf",
+		// pwd: "asdf",
+		// role: "mngr"
+	// },{
+		// name: "fdsa",
+		// pwd: "fdsa",
+		// role: "pending"
+	// },{
+		// name: "shirley",
+		// pwd: "shirley",
+		// role: "pending"
+	// }];
 
 	
 	//call the orientation check initially
 	toggleCss();
 	
-	//initialize the users object
+	//initialize the users objects
 	getUsers();
 	
 	//--------EVENT LISTENERS---------
@@ -50,21 +53,15 @@ function init(){
 
 	//temp user data, replace with fetch once we get the .war situation straight
 	function getUsers(){
-		// fetch("http://localhost:8080/myservlet")
-		// .then((response) => response.json())
-		// .then((data) => console.log(data));
+		let trash = user;
+		trash.action = "getusers";
+		fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(trash)
+		})
+		.then((response) => response.json())
+		.then((data) => console.log(data));
 		
-		// let temp = localStorage.getItem("users");
-		
-		// if(temp){
-			// users = JSON.parse(temp);
-		// }else{
-			
-			// users.push(initUsers);
-			// console.log(users);
-			// localStorage.setItem("users", JSON.stringify(users));
-			
-		// }
 	}
 	
 	//checks whether the window is in landscape or portrait format and sets the css sheet and boolean variable
@@ -100,26 +97,6 @@ function init(){
 		}
 	}
 	
-	//switches the class animation to fade in or out and shows or hides the element accordingly
-	function toggleFader(myId){
-		
-		let myElement = document.getElementById(myId);
-		
-		if(myElement.classList.contains("fadein")){
-			
-			myElement.className = "fadeout";
-			setTimeout(function(){myElement.style.display = "none";}, 450);
-		}else{
-			
-			myElement.style.display = "block";
-			myElement.className = "fadein";
-		}
-		
-		//restart the animation
-		myElement.style.animation = 'none';
-		myElement.offsetHeight;
-		myElement.style.animation = null; 
-	}
 	
 	//hide the welcome message and show the login box
 	function showLogin(){
@@ -130,8 +107,9 @@ function init(){
 
 		if(myUsername.innerText == "login" && window.getComputedStyle(myMessage).display == "block"){
 			
-			toggleFader(myMessage.id);
-			setTimeout(function(){toggleFader(myLogin.id);}, 500);
+			hideChildren("maindiv");
+			document.getElementById("login_box").style.display = "block";
+			
 		}
 	}
 	
@@ -206,9 +184,9 @@ function init(){
 			// }
 		// }
 		
-		toggleFader("login_box");
+		hideChildren("maindiv");
 		popUsers();
-		toggleFader("admin_box");
+		document.getElementById("admin_box").style.display = "block";
 	}
 	
 	//fill out the table of users for the admin to modify
@@ -220,7 +198,6 @@ function init(){
 						<th>Modify:</th>
 					</tr>`;
 		
-		console.log(users.length);
 		for(let i = 0; i < users.length; i++){
 			myLines += `<tr>
 			<td>${users[i].name}</td>
@@ -236,13 +213,13 @@ function init(){
 		
 		document.getElementById("admin_box_table").innerHTML = myLines;
 		
+		//set the option to the users role
 		let tempOptions = document.getElementsByClassName("users_roles");
 		let myUserRoles = Array.from(tempOptions);
-		let myRoleIndex = ["pending", "admin", "mngr", "emp"]
 		
 		for(let i = 0; i < users.length; i++){
 			
-			myUserRoles[i].selectedIndex = myRoleIndex.indexOf(users[i].role);
+			myUserRoles[i].selectedIndex = roles.indexOf(users[i].role);
 
 		}
 	}
