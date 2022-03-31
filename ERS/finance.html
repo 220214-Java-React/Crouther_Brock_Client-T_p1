@@ -51,7 +51,7 @@
 
 
 <!-- Web Content -->
-<body style="background-color: #00183c;">
+<body style="background-color: #00183c; overflow: hidden;">
 
 
 	<!-- Navigation -->
@@ -82,8 +82,12 @@
 			<div class="square embeddedItem ord1 oBK">
 				<h1 style="font-size: 6em; line-height: 1em; padding-left: 5%;">Welcome Back</h1>
 				<h3 style="font-size: 3em; padding-left: 5%;">Username</h3>
-				<p style="font-size: 1.5em; line-height: 1em; padding: 5%;">To Review all Open and Close Reinbursements Click "Begin". <br><br>As a Financial Manager at Revature you'll be able to sort reimbursements by type or status, view specific reimbursement details, and choose to approve or deny active reinbursement request.</p>
-				<div class="center" style="padding-bottom: 5%;"><button onclick="addTable();" style="width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">BEGIN</button></div>
+				
+				<p style="font-size: 1.5em; line-height: 1em; padding: 5%;">To Review all Open and Close Reinbursements Click "Review". <br><br>As a Financial Manager at Revature you'll be able to sort reimbursements by type or status, view specific reimbursement details, and choose to approve or deny active reinbursement request.</p>
+				
+				<div class="center" style="padding-bottom: 5%;">
+					<button onclick="addTable();" style="width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Review</button>
+					<button onclick="createRei();" style="width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Create</button></div>
 			</div>
 
 			<div class="embeddedItem square ord2">
@@ -94,6 +98,33 @@
 				<div><p style="width: 100%; text-align: center;">Learn More</p></div>
 			</div>
 
+		</div>
+	</div>
+
+
+	<!-- Create Reinburement -->
+	<div style="text-align: center;">
+		
+		<div class="fw-box" id="cRei" style="display: none; background-color: white; min-height: 60vh;">
+			<form style="display: inline-block;"  onsubmit="return hi()">
+
+				<label style="float: left;" for="amo">Amount:</label>
+				<input type="text" id="amo" name="amo"><br>
+
+				<label style="float: left;"for="desc">Description:</label>
+				<input type="text" id="desc" name="desc"><br>
+
+				<label style="float: left;" for="Receipt">Receipt (Link):</label>
+				<input type="text" id="Receipt" name="amReceipto"><br>
+
+				<label style="float: left;" for="Payment">Payment ID:</label>
+				<input type="text" id="Payment" name="Payment"><br>
+
+				<label style="float: left;" for="Type">Type:</label>
+				<input type="text" id="Type" name="Type"><br><br>
+
+				<input type="submit" value="Submit">
+			</form> 
 		</div>
 	</div>
 
@@ -120,20 +151,27 @@
 
 </html>
 
+
 <script type="text/javascript">
 	
 	function addTable(){
 		document.getElementById("wm").remove();
+
 		var ifrm = document.createElement('iframe');
-		ifrm.setAttribute('id', 'ifrm'); // assign an id
+		ifrm.setAttribute('id', 'ifrm');
 
-		//document.body.appendChild(ifrm); // to place at end of document
-
-		// to place before another page element
 		var footer = document.getElementById('footer');
 		footer.parentNode.insertBefore(ifrm, footer);
 
-		// assign url
 		ifrm.setAttribute('src', 'table.html');
+	}
+
+	function createRei(){
+		document.getElementById("wm").remove();
+		document.getElementById("cRei").style.display = "inline-block";
+	}
+
+	function hi(){
+		parent.location.reload();
 	}
 </script>

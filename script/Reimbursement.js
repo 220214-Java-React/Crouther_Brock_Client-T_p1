@@ -5,7 +5,7 @@ class Reimbursement {
 	Submitted = "";
 	Resolved = "";
 	Description = "Details Pending...";
-	Recipt = "";
+	Receipt = "";
 	Payment_ID = "";
 	Author_ID = "Employee";
 	Resolver_ID = "Revature";
@@ -18,7 +18,7 @@ class Reimbursement {
 		this.Submitted = s;
 		this.Resolved = res,
 		this.Description = des;
-		this.Recipt = rec;
+		this.Receipt = rec;
 		this.Payment_ID = P_ID;
 		this.Author_ID = A_ID;
 		this.Resolver_ID = R_ID;
@@ -47,8 +47,8 @@ class Reimbursement {
 		let Description = document.createElement('td');
 		Description.textContent = rei.Description;
 
-		let Recipt = document.createElement('td');
-		Recipt.textContent = rei.Recipt;
+		let receipt = document.createElement('td');
+		receipt.textContent = rei.Receipt;
 
 		let Payment_ID = document.createElement('td');
 		Payment_ID.textContent = rei.Payment_ID;
@@ -71,7 +71,7 @@ class Reimbursement {
 		document.getElementById(rei.Reimbursement_ID).appendChild(Submitted);
 		document.getElementById(rei.Reimbursement_ID).appendChild(Resolved);
 		document.getElementById(rei.Reimbursement_ID).appendChild(Description);
-		document.getElementById(rei.Reimbursement_ID).appendChild(Recipt);
+		document.getElementById(rei.Reimbursement_ID).appendChild(Receipt);
 		document.getElementById(rei.Reimbursement_ID).appendChild(Payment_ID);
 		document.getElementById(rei.Reimbursement_ID).appendChild(Author_ID);
 		document.getElementById(rei.Reimbursement_ID).appendChild(Resolver_ID);
