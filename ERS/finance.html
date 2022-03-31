@@ -20,38 +20,6 @@
 </head>
 
 
-<!-- Webpage specific styling that contradicts General/External Guidline defaults -->
-<style type="text/css">
-	* { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
-
-	h1 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; }
-
-	h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } 
-	 
-	blockquote { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } 
-
-	pre { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
-
-	.hBK{
-		background-image: linear-gradient(to left, white, #ffffff, #fafafa, #ededed, #d3d3d3, lightgray);
-	}
-	.oBK{
-		background-image: linear-gradient(to left, #ffffff, #fff6e6, #ffdb99, #ffa500);
-	}
-	.center {
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	}
-	#ifrm{
-		width: 100vw;
-		background-color: white;
-		min-height: 50vh;
-		border:  none;
-	}
-</style>
-
-
 <!-- Web Content -->
 <body style="background-color: #00183c; overflow: hidden;">
 
@@ -61,10 +29,10 @@
 
 		<img style="padding: 2vh 2vw 2vh 2vw; display: inline-block; max-height: 10vh; width: auto;" src="https://revature.com/wp-content/themes/revature/imgs/logo-white-color.png">
 
-		<div style="float: right;"><a style="color: white; font-size: 1.5em;" href="../index.html">log-out</a>
-		<button onclick="location.href = 'finance.html';" style="border-radius: 0%; font-size: 1em; background: darkorange;  margin: 2vh 2vw 2vh 2vw; padding: 2vh 2vw 2vh 2vw; display: inline-block; max-height: 10vh; width: auto;">
-			<strong>HOME</strong>
-		</button></div>
+		<div style="float: right;">
+			<a style="color: white; font-size: 1.5em;" href="../index.html">log-out</a>
+			<button onclick="location.href = 'finance.html';" id="home">HOME</button>
+		</div>
 	</div>
 
 
@@ -173,3 +141,58 @@
 		document.getElementById("cRei").style.display = "inline-block";
 	}
 </script>
+
+
+<!-- Webpage specific styling that contradicts General/External Guidline defaults -->
+<style type="text/css">
+	* { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
+
+	h1 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; }
+
+	h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } 
+	 
+	blockquote { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } 
+
+	pre { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
+
+	.hBK{
+		background-image: linear-gradient(to left, white, #ffffff, #fafafa, #ededed, #d3d3d3, lightgray);
+	}
+	.oBK{
+		background-image: linear-gradient(to left, #ffffff, #fff6e6, #ffdb99, #ffa500);
+	}
+	.center {
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	}
+	#ifrm{
+		width: 100vw;
+		background-color: white;
+		min-height: 50vh;
+		border:  none;
+	}
+
+	#home{
+		
+		font-size: 1.5em; 
+		background: darkorange;  
+		margin: 2vh 2vw 2vh 2vw; 
+		padding: 2vh 2vw 2vh 2vw; 
+		display: inline-block; 
+		max-height: 10vh; 
+		width: auto;
+		
+		font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+		font-weight: bold;
+	}
+	button{
+		border-radius: 2em; 
+		border: 1px solid rgba(0, 0, 0, .3);
+	}
+
+	button:hover{
+		opacity: 0.6;
+		cursor: grab;
+	}
+</style>
