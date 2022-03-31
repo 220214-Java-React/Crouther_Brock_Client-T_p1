@@ -2,40 +2,28 @@ function init(){
 
 	//a boolean to keep track of the windows orientation
 	var isMobile = false;
-	var user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "1", action: "register"};
+	
+	//blank user object, you can use this solo to pass an action to the servlet in addition to sending a completed user 
+	//ACTIONS: "registerUser", "getUsers", 
+	var user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
+	
+	//array for the user objects
 	var users = [];
+	
+	//name:pwd pairs so you can use the Object.keys(usersNamePwdObject).includes() 
 	var usersNamePwdObject = {};
-	var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
-	var roles = ["pending", "admin", "mngr", "emp"];//use indexof + 1 to get ROLE_ID or vice versa
-	// var users = [{
-		// name: "admin",
-		// pwd: "admin",
-		// role: "admin"
-	// },{
-		// name: "asdf",
-		// pwd: "asdf",
-		// role: "mngr"
-	// },{
-		// name: "fdsa",
-		// pwd: "fdsa",
-		// role: "pending"
-	// },{
-		// name: "shirley",
-		// pwd: "shirley",
-		// role: "pending"
-	// }];
-
 	
-	//call the orientation check initially
-	toggleCss();
+	//regex for the email pattern, not foolproof
+	var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 	
-	//initialize the users objects
-	getUsers();
+	//enum that corresponds to role id, use indexof(parseInt(roleid -1)) to get role or vice versa
+	const roles = ["pending", "admin", "mngr", "emp"];
+	
 	
 	//--------EVENT LISTENERS---------
 	window.addEventListener("resize", toggleCss);
 	
-	document.getElementById("login_button").addEventListener("click", showLogin);
+	document.getElementById("login_button").addEventListener("click", loginOut);
 	
 	document.getElementById("login_box_login_username").addEventListener("input", valCreds);
 	document.getElementById("login_box_login_password").addEventListener("input", valCreds);
@@ -51,17 +39,54 @@ function init(){
 	document.getElementById("login_box_nav_register").addEventListener("click", toggleLoginRegister);
 
 
-	//temp user data, replace with fetch once we get the .war situation straight
+	//-------GET FUNCY--------
+	//call the orientation check initially
+	toggleCss();
+	
+	//initialize the users objects
+	getUsers();
+
+	//pulls data from the ERS_USERS and checks local storage
 	function getUsers(){
-		let trash = user;
-		trash.action = "getusers";
+		
+		let trash = {
+			action:"getusers"
+		};
 		fetch("http://localhost:8080/myservlet",{
 				method: "post",
 				body: JSON.stringify(trash)
 		})
 		.then((response) => response.json())
-		.then((data) => console.log(data));
+		.then((data) => setUsers(data));
 		
+	}
+	
+	//sets the array of user objects with the response data, 
+	//also creates an object of name:pwd pairs for login, calls the function to populate the admin table
+	function setUsers(myData){
+		
+		users = myData;
+		usersNamePwdObject = {};
+		
+		users.forEach(function(each){
+			
+			Object.defineProperty(usersNamePwdObject, each.username, {value:each.pwd});
+		});
+		
+		popUsers();
+		
+		//check for saved login information and load accordingly
+		let temp = localStorage.getItem("ERS_User");
+		if(temp != null){
+			user = JSON.parse(temp);
+			document.getElementById("login_button").innerText = user.name;
+			if(window.getComputedStyle(document.getElementById("welcome")).display == "block"){
+				hideChildren("maindiv");
+				document.getElementById("login_box").style.display = "block";
+			}
+			
+			checkUser();
+		}
 	}
 	
 	//checks whether the window is in landscape or portrait format and sets the css sheet and boolean variable
@@ -98,18 +123,20 @@ function init(){
 	}
 	
 	
-	//hide the welcome message and show the login box
-	function showLogin(){
+	//hide the welcome message and show the login box or logout and show welcome message
+	function loginOut(e){
 
-		let myMessage = document.getElementById("welcome");
-		let myLogin = document.getElementById("login_box");
-		let myUsername = document.getElementById("login_button");
-
-		if(myUsername.innerText == "login" && window.getComputedStyle(myMessage).display == "block"){
+		if(e.target.innerText == "login"){
 			
 			hideChildren("maindiv");
 			document.getElementById("login_box").style.display = "block";
+		}else{
 			
+			localStorage.removeItem("ERS_User");
+			user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
+			hideChildren("maindiv");
+			document.getElementById("login_box").style.display = "block";
+			e.target.innerText = "login";
 		}
 	}
 	
@@ -134,39 +161,55 @@ function init(){
 	//validate user input before calling the checker
 	function logIn(){
 		
-		user.name = document.getElementById("login_box_login_username").value;
-		user.pwd = document.getElementById("login_box_login_password").value;
+		let myUsernameElement = document.getElementById("login_box_login_username");
+		let myPasswordElement = document.getElementById("login_box_login_password");
+		user.name = myUsernameElement.value;
+		user.pwd = myPasswordElement.value;
 		
 		if(!user.name){
 			alert("You must enter a username.");
 		}else if(!user.pwd){
 			alert("You must enter a password.");
 		}else{
-			checkUser(user);
+			checkUser();
+			myUsernameElement.value = "";
+			myPasswordElement.value = "";
 		}
 	}
 	
 	//registers a user with the database, sets roleid to zero as a code for a user not yet approved by the admin
 	function registerUser(){
 		
-		let myUsername = document.getElementById("login_box_register_username").value;
-		let myPassword = document.getElementById("login_box_register_password").value;
-		let myEmail = document.getElementById("login_box_register_email").value;
-		let myFname = document.getElementById("login_box_register_fname").value;
-		let myLname = document.getElementById("login_box_register_lname").value;
+		let myUsername = document.getElementById("login_box_register_username");
+		let myPassword = document.getElementById("login_box_register_password");
+		let myEmail = document.getElementById("login_box_register_email");
+		let myFname = document.getElementById("login_box_register_fname");
+		let myLname = document.getElementById("login_box_register_lname");
 		
-		if(myEmail.match(emailPattern)){
+		if(myEmail.value.match(emailPattern)){
 			
-			user.name = myUsername;
-			user.pwd = myPassword;
-			user.email = myEmail;
-			user.fname = myFname;
-			user.lname = myLname;
+			user.name = myUsername.value;
+			user.pwd = myPassword.value;
+			user.email = myEmail.value;
+			user.fname = myFname.value;
+			user.lname = myLname.value;
+			user.roleid = 1;
+			user.action = "register";
 			
 			fetch("http://localhost:8080/myservlet",{
 				method: "post",
 				body: JSON.stringify(user)
 			});
+			
+			alert("Registration submitted.\nAwaiting admin approval.");
+			
+			myUsername.value = "";
+			myPassword.value = "";
+			myEmail.value = "";
+			myFname.value = "";
+			myLname.value = "";
+			
+			getUsers();
 			
 		}else{
 			
@@ -175,18 +218,32 @@ function init(){
 		}
 	}
 	
-	//temporarily checks hardcoded users, replace with a fetch to compare hashed passwords and return something for a switch
-	function checkUser(myUser){
+	//checks the submitted info against the key value pairs created in setUsers, forks to either the admin screen or the 
+	function checkUser(){
+		console.log(usersNamePwdObject);
+		var myNames = Object.getOwnPropertyNames(usersNamePwdObject);
+		let myPwds = myNames.map(key => usersNamePwdObject[key]);
+
+		if(myNames.includes(user.name)){
+			if(usersNamePwdObject[user.name] == user.pwd){
+				if(user.name == "admin"){
+					hideChildren("maindiv");
+					document.getElementById("admin_box").style.display = "block";
+					document.getElementById("login_button").innerText = user.name;
+					localStorage.setItem("ERS_User", JSON.stringify(user));
+				}else{
+					document.getElementById("login_button").innerText = user.name;
+					localStorage.setItem("ERS_User", JSON.stringify(user));
+					window.location.href = "../ERS/finance.html";
+				}
+			}else{
+				alert("The credentials do not match our records.");
+			}
+		}else{
+			alert("The credentials do not match our records.");
+		}
 		
-		// if(Object.keys(users).contains(myUser.name)){
-			// if(Object.values(users).contains(myUser.pwd)){
-				
-			// }
-		// }
 		
-		hideChildren("maindiv");
-		popUsers();
-		document.getElementById("admin_box").style.display = "block";
 	}
 	
 	//fill out the table of users for the admin to modify
@@ -200,7 +257,7 @@ function init(){
 		
 		for(let i = 0; i < users.length; i++){
 			myLines += `<tr>
-			<td>${users[i].name}</td>
+			<td>${users[i].username}</td>
 			<td><select class="users_roles" id="role_${i}">
 			<option value="pending">pending</option>
 			<option value="admin">admin</option>
@@ -219,8 +276,9 @@ function init(){
 		
 		for(let i = 0; i < users.length; i++){
 			
-			myUserRoles[i].selectedIndex = roles.indexOf(users[i].role);
-
+			myUserRoles[i].selectedIndex = parseInt(users[i].roleid)-1;
 		}
+		
+		
 	}
 }
