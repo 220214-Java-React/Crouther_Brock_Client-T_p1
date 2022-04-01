@@ -45,9 +45,6 @@ function init(){
 	
 	//initialize the users objects
 	getUsers();
-	
-	//load session data if any and redirect
-	restoreSession();
 
 	//pulls data from the ERS_USERS and checks local storage
 	function getUsers(){
@@ -55,6 +52,7 @@ function init(){
 		let trash = {
 			action:"getusers"
 		};
+		document.getElementById("loadscreen").style.display = "block";
 		fetch("http://localhost:8080/myservlet",{
 				method: "post",
 				body: JSON.stringify(trash)
@@ -77,31 +75,7 @@ function init(){
 		});
 		
 		popUsers();
-		
-	}
-	
-	//checks localstorage for user info and if found sets and redirects
-	function restoreSession(){
-		
-		//check for saved login information and load accordingly
-		let temp = localStorage.getItem("ERS_User");
-		if(temp != null){
-			
-			user = JSON.parse(temp);
-			document.getElementById("login_button").innerText = user.name;
-			
-			if(user.name == "admin"){
-				
-				hideChildren("maindiv");
-				document.getElementById("admin_box").style.display = "block";
-				
-			}else if(user.roleid != "1"){
-			
-				window.location = "ERS/finance.html";
-			}
-			
-			
-		}
+		document.getElementById("loadscreen").style.display = "none";
 	}
 	
 	//checks whether the window is in landscape or portrait format and sets the css sheet and boolean variable
@@ -147,7 +121,7 @@ function init(){
 			document.getElementById("login_box").style.display = "block";
 		}else{
 			
-			localStorage.removeItem("ERS_User");
+
 			user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
 			hideChildren("maindiv");
 			document.getElementById("login_box").style.display = "block";
@@ -187,6 +161,7 @@ function init(){
 			alert("You must enter a password.");
 		}else{
 			user.action = "checkpwd";
+			document.getElementById("loadscreen").style.display = "block";
 			fetch("http://localhost:8080/myservlet",{
 					method: "post",
 					body: JSON.stringify(user)
@@ -217,20 +192,19 @@ function init(){
 			user.roleid = "1";
 			user.action = "register";
 			
-			fetch("http://localhost:8080/myservlet",{
-				method: "post",
-				body: JSON.stringify(user)
-			});
-			
-			alert("Registration submitted.\nAwaiting admin approval.");
-			
 			myUsername.value = "";
 			myPassword.value = "";
 			myEmail.value = "";
 			myFname.value = "";
 			myLname.value = "";
 			
-			getUsers();
+			document.getElementById("loadscreen").style.display = "block";
+			alert("Registration submitted.\nAwaiting admin approval.");
+			
+			fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(user)
+			}).then(() => getUsers());
 			
 		}else{
 			
@@ -249,23 +223,24 @@ function init(){
 		if(myNames.includes(user.name)){
 
 			if(user.pwdBool == "true"){
+				
 				if(user.name == "admin"){
 					hideChildren("maindiv");
 					document.getElementById("admin_box").style.display = "block";
 					document.getElementById("login_button").innerText = user.name;
-					localStorage.setItem("ERS_User", JSON.stringify(user));
-				}else{
+				}else if(user.roleid != "1"){
 					document.getElementById("login_button").innerText = user.name;
-					localStorage.setItem("ERS_User", JSON.stringify(user));
 					window.location = "ERS/finance.html";
+				}else{
+					alert("The user is pending approval from an admin.");
 				}
 			}else{
 				alert("The credentials do not match our records.");
 			}
 		}else{
-			alert("The username do not match our records.");
+			alert("The credentials do not match our records.");
 		}
-		
+		document.getElementById("loadscreen").style.display = "none";
 	}
 	
 	
@@ -293,7 +268,7 @@ function init(){
 		
 		document.getElementById("admin_box_table").innerHTML = myLines;
 		
-		//set the option to the users role
+		//set the drop down option to the users role
 		let tempOptions = document.getElementsByClassName("users_roles");
 		let myUserRoles = Array.from(tempOptions);
 		
@@ -304,23 +279,36 @@ function init(){
 		}
 	}
 	
-	//modify the role of the user
+	//modify the role of the user or delete user
 	function modRole(e){
 		
 		let temp = e.target.id;
-		let myIndex = temp.substring(temp.length -1);
+		let userIndex = temp.substring(temp.length -1);
+		let roleIndex = document.getElementById(`role_${userIndex}`).selectedIndex;
 
-		let myUser = {
-			name: document.getElementById(`username_${myIndex}`).innerText,
-			roleid: roles.indexOf(document.getElementById(`role_${myIndex}`).value)+1,
-			action: "modrole"
+		if(roleIndex != user.roleid && roleIndex > 0){
+			
+			let myUser = {
+				name: document.getElementById(`username_${userIndex}`).innerText,
+				roleid: (roleIndex+1).toString()
+			}
+			
+			if(roleIndex != 4){
+				myUser.action = "modrole";
+			}else{
+				myUser.action = "delete";
+			}
+
+			document.getElementById("loadscreen").style.display = "block";
+			fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(myUser)
+			}).then(() => getUsers());
+
 		}
-		console.log(myUser);
-		fetch("http://localhost:8080/myservlet",{
-			method: "post",
-			body: JSON.stringify(myUser)
-		});
-		
-		getUsers();
 	}
+	
+	/*
+	FINANCE JS HERE
+	*/
 }
