@@ -21,7 +21,7 @@
 
 
 <!-- Web Content -->
-<body style="background-color: #00183c; overflow: hidden;">
+<body style="background-color: #00183c; overflow: hidden; height: 100vh; position: relative; overflow-y: scroll;">
 
 
 	<!-- Navigation -->
@@ -31,7 +31,7 @@
 
 		<div style="float: right;">
 			<a style="color: white; font-size: 1.5em;" href="../index.html">log-out</a>
-			<button onclick="location.href = 'finance.html';" id="home">HOME</button>
+			<button onclick="location.href = 'finance.html'; localStorage.removeItem('ERS_User');" id="home">HOME</button>
 		</div>
 	</div>
 
@@ -66,7 +66,7 @@
 					<div><img style="padding: 0%; height: 48vh; width: auto;" src="https://revature.com/wp-content/uploads/2022/02/mobile-index-hero-img.png"></div>
 
 				</div>
-				<div><p style="width: 100%; text-align: center;">Learn More</p></div>
+				<div><a href="https://github.com/220214-Java-React/assignments/blob/main/project-requirements/project-1.md" target="_blank"><p style="width: 100%; text-align: center; font-size: 1.5em;">Learn More</p></a></div>
 			</div>
 
 		</div>
@@ -76,8 +76,8 @@
 	<!-- Create Reinburement -->
 	<div style="text-align: center;">
 		
-		<div class="fw-box" id="cRei" style="display: none; background-color: white; min-height: 60vh;">
-			<form style="display: inline-block;"  onsubmit="return hi()">
+		<div class="fw-box" id="cRei" style="display: none; background-color: white; min-height: 54vh;">
+			<form style="display: inline-block;  padding-top: 5vh;">
 
 				<label style="float: left;" for="amo">Amount:</label>
 				<input type="text" id="amo" name="amo"><br>
@@ -101,14 +101,14 @@
 
 
 	<!-- Footer -->
-	<div id="footer" style="height: 8em; z-index: 999; width: 100%; background-color: #00183c;">
+	<div id="footer" style="height: 8em; z-index: 999; width: 100%; background-color: #00183c; ">
 
-		<div style="display: inline-block; float: left; text-align: center; padding-left: 2%;">
+		<div style="display: inline-block; float: left; text-align: center; padding-left: 2%; ">
 			<h3 style="color: white;">CONTACT US</h3>
 			<p style="color: white; display: inline-block;">info@revature.com <br>P#: 703 570 8181<br></p>
 		</div>
 
-		<div style="display: inline-block; float: right; text-align: center; padding-right: 2%;">
+		<div style="display: inline-block; float: right; text-align: center; padding-right: 2%;  right: 0; ">
 			<h3 style="color: white;">CORPORATE HEADQUARTERS</h3>
 			<p style="color: white; ">
 				11730 Plaza America Dr.<br>
@@ -145,27 +145,24 @@
 
 <!-- Webpage specific styling that contradicts General/External Guidline defaults -->
 <style type="text/css">
-	* { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
 
+	*  { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
 	h1 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; }
+	h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; }
 
-	h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } 
-	 
 	blockquote { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } 
+	pre 	   { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
 
-	pre { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
 
-	.hBK{
-		background-image: linear-gradient(to left, white, #ffffff, #fafafa, #ededed, #d3d3d3, lightgray);
-	}
-	.oBK{
-		background-image: linear-gradient(to left, #ffffff, #fff6e6, #ffdb99, #ffa500);
-	}
+	.hBK{background-image: linear-gradient(to left, white, #ffffff, #fafafa, #ededed, #d3d3d3, lightgray);}
+	.oBK{background-image: linear-gradient(to left, #ffffff, #fff6e6, #ffdb99, #ffa500);}
+
 	.center {
 	  display: flex;
 	  justify-content: center;
 	  align-items: center;
 	}
+
 	#ifrm{
 		width: 100vw;
 		background-color: white;
@@ -186,13 +183,18 @@
 		font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 		font-weight: bold;
 	}
+
 	button{
 		border-radius: 2em; 
 		border: 1px solid rgba(0, 0, 0, .3);
 	}
-
 	button:hover{
 		opacity: 0.6;
 		cursor: grab;
+	}
+
+	label{
+		width: 7em;
+		text-align: left;
 	}
 </style>

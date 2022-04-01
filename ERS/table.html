@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 
+
+<!-- Webpage specific metadata and resources -->
 <head>
+
+	<!-- Meta Data Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -13,8 +17,63 @@
 
 	<!-- External Resources -->
 	<link rel="stylesheet" type="text/css" href="https://myles.works/css/AvantFlat.css">
+	<script src="../script/table.js"></script>
 </head>
 
+
+<body>
+
+	<!-- Web Content Container: General Page Styling Applied -->
+	<div class="fw-box">
+
+		<!-- Sort/Filter Navigation Bar -->
+		<div id="sortNav" style="float: center; text-align: center; padding-top: 2%;">
+
+			<label style="font-weight: bold;">SORT: </label>
+			<button onclick="reset(db);">View All</button>
+
+			<label style="margin-left: 2em;">Status: </label>
+			<button onclick="sortStatus(db, 'Approved');">Approved</button>
+			<button onclick="sortStatus(db, 'Pending');">Pending</button>
+			<button onclick="sortStatus(db, 'Denied');">Denied</button>
+
+			<label style="margin-left: 2em;">Type: </label>
+			<button onclick="sortType(db, 'Lodging');">Lodging</button>
+			<button onclick="sortType(db, 'Travel');">Travel</button>
+			<button onclick="sortType(db, 'Food');">Food</button>
+			<button onclick="sortType(db, 'Other');">Other</button>
+		</div>
+
+		<!-- Expense Reinbursement System Table Results -->
+		<table id="TAB" style="float: center; padding-top: 2%;">
+
+		  <tr style="text-align: left;">
+		    <th class="thSpacingSm">Reimbursement</th>
+		    <th class="thSpacingSm">Amount</th>
+		    <th class="thSpacing">Sumbited</th>
+		    <th class="thSpacing">Resolved</th>
+		    <th class="thSpacingLg">Description</th>
+		    <th class="thSpacingSm">Recipt</th>
+		    <th class="thSpacingSm">Payment</th>
+		    <th class="thSpacing">Author</th>
+		    <th class="thSpacing">Resolver</th>
+		    <th class="thSpacingSm">Status</th>
+		    <th class="thSpacingSm">Type</th>
+		  </tr>
+		</table>
+	</div>
+</body>
+</html>
+
+
+<!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
+<script type="text/javascript">
+	
+(addRow(db)); //runs on page load. Shows all current reinbursements
+</script>
+
+
+<!-- Webpage specific styling that contradicts General/External Guidline defaults -->
 <style type="text/css">
 	*{
 		font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; 
@@ -54,289 +113,3 @@
 		border-style: solid;
 	}
 </style>
-
-<body style="">
-	<div class="fw-box">
-		<table id="TAB" style="float: center; padding-top: 2%;">
-			
-		  <tr style="text-align: left;">
-		    <th class="thSpacingSm">Reimbursement</th>
-		    <th class="thSpacingSm">Amount</th>
-		    <th class="thSpacing">Sumbited</th>
-		    <th class="thSpacing">Resolved</th>
-		    <th class="thSpacingLg">Description</th>
-		    <th class="thSpacingSm">Recipt</th>
-		    <th class="thSpacingSm">Payment</th>
-		    <th class="thSpacing">Author</th>
-		    <th class="thSpacing">Resolver</th>
-		    <th class="thSpacingSm">Status</th>
-		    <th class="thSpacingSm">Type</th>
-		  </tr>
-
-		</table>
-	</div>
-</body>
-</html>
-
-
-
-<script type="text/javascript">
-	// SAMPLE DATA 
-	var db = [
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		},
-		{
-			"Reimbursement_ID" : "12345",
-			"Amount" : "$100.00",
-			"Submitted": "10:37 03/30/2022",
-			"Resolved" : "10:38 03/30/2022",
-			"Description" : "Something Important...",
-			"Recipt" : "ABC Inc.",
-			"Payment_ID" : "VISA",
-			"Author_ID" : "Myles Crouther",
-			"Resolver_ID" : "Revature",
-			"Status_ID" : "Approved",
-			"Type_ID" : "Other"
-		}
-	];
-	
-
-	function addRow(arr){
-
-		for (i = 0; i < arr.length; i++){
-
-			let row = document.createElement('tr');
-			row.setAttribute('id', i);
-
-			if(i%2 == 0) row.setAttribute('class', "white");
-
-			let r_id = document.createElement('td');
-			r_id.textContent = arr[i].Reimbursement_ID;
-
-			let Amount = document.createElement('td');
-			Amount.textContent = arr[i].Amount;
-
-			let Submitted = document.createElement('td');
-			Submitted.textContent = arr[i].Submitted;
-
-			let Resolved = document.createElement('td');
-			Resolved.textContent = arr[i].Resolved;
-
-			let Description = document.createElement('td');
-			Description.textContent = arr[i].Description;
-
-			let Recipt = document.createElement('td');
-			Recipt.textContent = arr[i].Recipt;
-
-			let Payment_ID = document.createElement('td');
-			Payment_ID.textContent = arr[i].Payment_ID;
-
-			let Author_ID = document.createElement('td');
-			Author_ID.textContent = arr[i].Author_ID;
-
-			let Resolver_ID = document.createElement('td');
-			Resolver_ID.textContent = arr[i].Resolver_ID;
-
-			let Status_ID = document.createElement('td');
-			Status_ID.textContent = arr[i].Status_ID;
-
-			let Type_ID = document.createElement('td');
-			Type_ID.textContent = arr[i].Type_ID;
-
-			document.getElementById("TAB").appendChild(row);
-			document.getElementById(i).appendChild(r_id);
-			document.getElementById(i).appendChild(Amount);
-			document.getElementById(i).appendChild(Submitted);
-			document.getElementById(i).appendChild(Resolved);
-			document.getElementById(i).appendChild(Description);
-			document.getElementById(i).appendChild(Recipt);
-			document.getElementById(i).appendChild(Payment_ID);
-			document.getElementById(i).appendChild(Author_ID);
-			document.getElementById(i).appendChild(Resolver_ID);
-			document.getElementById(i).appendChild(Status_ID);
-			document.getElementById(i).appendChild(Type_ID);
-		}
-	}
-
-
-	(addRow(db));
-</script>
