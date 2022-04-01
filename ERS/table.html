@@ -26,10 +26,22 @@
 	<!-- Web Content Container: General Page Styling Applied -->
 	<div class="fw-box">
 
+		<div id="modifyNav" style="float: center; text-align: center; padding-top: 2%;">
+			<form>
+
+				<label for="RID">Modify RID:</label>
+				<input type="text" id="RID" name="RID">
+
+				<button onclick="changeStatus(true, db)">Approve</button>
+				<button onclick="changeStatus(false, db)">Deny</button>
+			</form>
+		</div>
+
+
 		<!-- Sort/Filter Navigation Bar -->
 		<div id="sortNav" style="float: center; text-align: center; padding-top: 2%;">
 
-			<label style="font-weight: bold;">SORT: </label>
+			<p style="font-weight: bold;">SORT BY</p><br>
 			<button onclick="reset(db);">View All</button>
 
 			<label style="margin-left: 2em;">Status: </label>
@@ -45,10 +57,10 @@
 		</div>
 
 		<!-- Expense Reinbursement System Table Results -->
-		<table id="TAB" style="float: center; padding-top: 2%;">
+		<table id="TAB" style="float: center; padding-top: 2%; padding-bottom: 2%;">
 
 		  <tr style="text-align: left;">
-		    <th class="thSpacingSm">Reimbursement</th>
+		    <th class="thSpacingSm">RID</th>
 		    <th class="thSpacingSm">Amount</th>
 		    <th class="thSpacing">Sumbited</th>
 		    <th class="thSpacing">Resolved</th>
@@ -70,6 +82,20 @@
 <script type="text/javascript">
 	
 (addRow(db)); //runs on page load. Shows all current reinbursements
+
+
+// Changes Approval Status according to Financial Manager's form inputs.
+function changeStatus(approved, arr){
+	
+	for (i = 0; i < arr.length; i++){
+		if (arr[i].Reimbursement_ID == document.getElementById("RID").value){
+
+			if(approved){arr[i].Status_ID = "Approved";}
+			else{arr[i].Status_ID = "Denied";}
+		}
+	}
+	reset(arr);
+}
 </script>
 
 

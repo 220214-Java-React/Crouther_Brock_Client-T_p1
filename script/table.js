@@ -13,7 +13,7 @@
 // SAMPLE DATA 
 var db = [
 	{
-		"Reimbursement_ID" : "12345",
+		"Reimbursement_ID" : "123",
 		"Amount" : "$100.00",
 		"Submitted": "10:37 03/30/2022",
 		"Resolved" : "10:38 03/30/2022",
@@ -309,7 +309,7 @@ function sortType(arr, str){
 
 function reset(arr){
 	clearTable();
-	addRow(db);
+	addRow(arr);
 }
 
 
