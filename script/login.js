@@ -45,6 +45,9 @@ function init(){
 	
 	//initialize the users objects
 	getUsers();
+	
+	//load session data if any and redirect
+	restoreSession();
 
 	//pulls data from the ERS_USERS and checks local storage
 	function getUsers(){
@@ -75,17 +78,29 @@ function init(){
 		
 		popUsers();
 		
+	}
+	
+	//checks localstorage for user info and if found sets and redirects
+	function restoreSession(){
+		
 		//check for saved login information and load accordingly
 		let temp = localStorage.getItem("ERS_User");
 		if(temp != null){
+			
 			user = JSON.parse(temp);
 			document.getElementById("login_button").innerText = user.name;
-			if(window.getComputedStyle(document.getElementById("welcome")).display == "block"){
+			
+			if(user.name == "admin"){
+				
 				hideChildren("maindiv");
-				document.getElementById("login_box").style.display = "block";
+				document.getElementById("admin_box").style.display = "block";
+				
+			}else if(user.roleid != "1"){
+			
+				window.location = "ERS/finance.html";
 			}
 			
-			checkUser();
+			
 		}
 	}
 	
@@ -171,7 +186,13 @@ function init(){
 		}else if(!user.pwd){
 			alert("You must enter a password.");
 		}else{
-			checkUser();
+			user.action = "checkpwd";
+			fetch("http://localhost:8080/myservlet",{
+					method: "post",
+					body: JSON.stringify(user)
+			})
+			.then((response) => response.text())
+			.then((data) => checkUser(data));
 			myUsernameElement.value = "";
 			myPasswordElement.value = "";
 		}
@@ -193,7 +214,7 @@ function init(){
 			user.email = myEmail.value;
 			user.fname = myFname.value;
 			user.lname = myLname.value;
-			user.roleid = 1;
+			user.roleid = "1";
 			user.action = "register";
 			
 			fetch("http://localhost:8080/myservlet",{
@@ -219,13 +240,15 @@ function init(){
 	}
 	
 	//checks the submitted info against the key value pairs created in setUsers, forks to either the admin screen or the 
-	function checkUser(){
-		console.log(usersNamePwdObject);
+	function checkUser(myData){
+
 		var myNames = Object.getOwnPropertyNames(usersNamePwdObject);
-		let myPwds = myNames.map(key => usersNamePwdObject[key]);
+		//let myPwds = myNames.map(key => usersNamePwdObject[key]);
+		user.pwdBool = myData.trim();
 
 		if(myNames.includes(user.name)){
-			if(usersNamePwdObject[user.name] == user.pwd){
+
+			if(user.pwdBool == "true"){
 				if(user.name == "admin"){
 					hideChildren("maindiv");
 					document.getElementById("admin_box").style.display = "block";
@@ -234,17 +257,17 @@ function init(){
 				}else{
 					document.getElementById("login_button").innerText = user.name;
 					localStorage.setItem("ERS_User", JSON.stringify(user));
-					window.location.href = "../ERS/finance.html";
+					window.location = "ERS/finance.html";
 				}
 			}else{
 				alert("The credentials do not match our records.");
 			}
 		}else{
-			alert("The credentials do not match our records.");
+			alert("The username do not match our records.");
 		}
 		
-		
 	}
+	
 	
 	//fill out the table of users for the admin to modify
 	function popUsers(){
@@ -257,7 +280,7 @@ function init(){
 		
 		for(let i = 0; i < users.length; i++){
 			myLines += `<tr>
-			<td>${users[i].username}</td>
+			<td id="username_${i}">${users[i].username}</td>
 			<td><select class="users_roles" id="role_${i}">
 			<option value="pending">pending</option>
 			<option value="admin">admin</option>
@@ -277,8 +300,27 @@ function init(){
 		for(let i = 0; i < users.length; i++){
 			
 			myUserRoles[i].selectedIndex = parseInt(users[i].roleid)-1;
+			document.getElementById(`submit_${i}`).addEventListener("click", modRole);
 		}
+	}
+	
+	//modify the role of the user
+	function modRole(e){
 		
+		let temp = e.target.id;
+		let myIndex = temp.substring(temp.length -1);
+
+		let myUser = {
+			name: document.getElementById(`username_${myIndex}`).innerText,
+			roleid: roles.indexOf(document.getElementById(`role_${myIndex}`).value)+1,
+			action: "modrole"
+		}
+		console.log(myUser);
+		fetch("http://localhost:8080/myservlet",{
+			method: "post",
+			body: JSON.stringify(myUser)
+		});
 		
+		getUsers();
 	}
 }
