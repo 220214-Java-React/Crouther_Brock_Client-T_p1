@@ -13,6 +13,10 @@ body{
 	color: #333333;
 }
 
+button,select{
+	font-size: 1.5em;
+}
+
 #loadscreen{
 	display: none;
 	background: url("../img/loading.gif") no-repeat center center fixed;
@@ -112,7 +116,7 @@ body{
 }
 
 .login_box_nav_button_focus{
-	outline: 2px solid #666666;
+	background-color: rgba(255,255,255,0.75);
 	color: rgba(51,51,51,1);
 	width: 50%;
 	padding: 10px;
@@ -121,7 +125,6 @@ body{
 }
 
 .login_box_nav_button_not{
-	outline: none;
 	color: rgba(51,51,51,0.5);
 	width: 50%;
 	padding: 10px;
@@ -160,13 +163,13 @@ body{
 
 td{
 	padding: 10px;
-	font-size: 1.5em;
+	font-size: 2em;
 	font-weight: 500;
 }
 
 th{
 	padding: 10px;
-	font-size: 1.5em;
+	font-size: 2em;
 }
 
 tr{

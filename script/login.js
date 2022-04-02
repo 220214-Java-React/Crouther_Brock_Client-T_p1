@@ -10,8 +10,8 @@ function init(){
 	//array for the user objects
 	var users = [];
 	
-	//name:pwd pairs so you can use the Object.keys(usersNamePwdObject).includes() 
-	var usersNamePwdObject = {};
+	//a 2d array of names and roles, used in popUsers
+	var usersNameRoleArray = [[],[]];
 	
 	//regex for the email pattern, not foolproof
 	var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -67,15 +67,54 @@ function init(){
 	function setUsers(myData){
 		
 		users = myData;
-		usersNamePwdObject = {};
+		usersNameRoleArray = [[],[]];
 		
 		users.forEach(function(each){
-			
-			Object.defineProperty(usersNamePwdObject, each.username, {value:each.pwd});
+
+			if(each.username != "admin"){
+				usersNameRoleArray[0].push(each.username);
+				usersNameRoleArray[1].push(each.roleid);
+			}
 		});
-		
+
 		popUsers();
 		document.getElementById("loadscreen").style.display = "none";
+	}
+	
+	//fill out the table of users for the admin to modify
+	function popUsers(){
+		
+		let myLines = `<tr>
+						<th>Username:</th>
+						<th>Role:</th>
+						<th>Modify:</th>
+					</tr>`;
+		
+		for(let i = 0; i < usersNameRoleArray[0].length; i++){
+
+			myLines += `<tr>
+			<td id="username_${i}">${usersNameRoleArray[0][i]}</td>
+			<td><select class="users_roles" id="role_${i}">
+			<option value="pending">pending</option>
+			<option value="admin">admin</option>
+			<option value="mngr">mngr</option>
+			<option value="emp">emp</option>
+			<option value="delete">delete</option>
+			</select></td>
+			<td><button type="button" id="submit_${i}">submit</button></td></tr>`;
+		}
+		
+		document.getElementById("admin_box_table").innerHTML = myLines;
+		
+		//set the drop down option to the users role
+		let tempOptions = document.getElementsByClassName("users_roles");
+		let myUserRoles = Array.from(tempOptions);
+		
+		for(let i = 0; i < myUserRoles.length; i++){
+			
+			myUserRoles[i].selectedIndex = parseInt(usersNameRoleArray[1][i])-1;
+			document.getElementById(`submit_${i}`).addEventListener("click", modRole);
+		}
 	}
 	
 	//checks whether the window is in landscape or portrait format and sets the css sheet and boolean variable
@@ -213,14 +252,12 @@ function init(){
 		}
 	}
 	
-	//checks the submitted info against the key value pairs created in setUsers, forks to either the admin screen or the 
+	//uses the username and the boolean value returned from logIn, forks to either the admin screen or the finance page
 	function checkUser(myData){
 
-		var myNames = Object.getOwnPropertyNames(usersNamePwdObject);
-		//let myPwds = myNames.map(key => usersNamePwdObject[key]);
 		user.pwdBool = myData.trim();
 
-		if(myNames.includes(user.name)){
+		if(usersNameRoleArray[0].includes(user.name) || user.name == "admin"){
 
 			if(user.pwdBool == "true"){
 				
@@ -241,42 +278,6 @@ function init(){
 			alert("The credentials do not match our records.");
 		}
 		document.getElementById("loadscreen").style.display = "none";
-	}
-	
-	
-	//fill out the table of users for the admin to modify
-	function popUsers(){
-		
-		let myLines = `<tr>
-						<th>Username:</th>
-						<th>Role:</th>
-						<th>Modify:</th>
-					</tr>`;
-		
-		for(let i = 0; i < users.length; i++){
-			myLines += `<tr>
-			<td id="username_${i}">${users[i].username}</td>
-			<td><select class="users_roles" id="role_${i}">
-			<option value="pending">pending</option>
-			<option value="admin">admin</option>
-			<option value="mngr">mngr</option>
-			<option value="emp">emp</option>
-			<option value="delete">delete</option>
-			</select></td>
-			<td><button type="button" id="submit_${i}">submit</button></td></tr>`;
-		}
-		
-		document.getElementById("admin_box_table").innerHTML = myLines;
-		
-		//set the drop down option to the users role
-		let tempOptions = document.getElementsByClassName("users_roles");
-		let myUserRoles = Array.from(tempOptions);
-		
-		for(let i = 0; i < users.length; i++){
-			
-			myUserRoles[i].selectedIndex = parseInt(users[i].roleid)-1;
-			document.getElementById(`submit_${i}`).addEventListener("click", modRole);
-		}
 	}
 	
 	//modify the role of the user or delete user
