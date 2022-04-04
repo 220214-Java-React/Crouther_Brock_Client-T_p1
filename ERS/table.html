@@ -31,7 +31,7 @@
 
 				<label for="RID">Modify RID:</label>
 				<input type="text" id="RID" name="RID">
-				<button><img style="height:1.2em; width: auto; padding-top: .3em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"></button>
+				<button onclick=""><img style="height:1.2em; width: auto; padding-top: .3em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"></button>
 				<button onclick="changeStatus(true, db)">Approve</button>
 				<button onclick="changeStatus(false, db)">Deny</button>
 			</form>
@@ -80,8 +80,9 @@
 
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
-	
-(addRow(db)); //runs on page load. Shows all current reinbursements
+
+getReimbursements();
+addRow(db);
 
 
 // Changes Approval Status according to Financial Manager's form inputs.
