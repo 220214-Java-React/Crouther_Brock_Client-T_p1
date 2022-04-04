@@ -11,7 +11,7 @@
 
 
 // SAMPLE DATA 
-var db = [
+let db = [
 	{
 		"Reimbursement_ID" : "123",
 		"Amount" : "$100.00",
