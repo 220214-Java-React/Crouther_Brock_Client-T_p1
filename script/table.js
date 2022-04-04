@@ -10,7 +10,8 @@
 
 
 
-//SAMPLE DATA 
+//SAMPLE DATA
+var eDB = []; 
 var db = [
 	{
 		"REIMB_ID" : "12345",
@@ -211,7 +212,6 @@ var db = [
 
 
 
-
 function getReimbursements(){
 	fetch("http://localhost:8080/crei",{
 			method: "get",
@@ -220,8 +220,8 @@ function getReimbursements(){
 	.then((rei) => setDB(rei));	
 }
 
+
 function setDB(arr){
-	console.log(arr);
 	db = arr;
 	addRow(db);
 }
@@ -229,67 +229,101 @@ function setDB(arr){
 
 
 /** addRow(arr) Creates a Table Row Entry for each value stored in the (arr)**/
-function addRow(arr){
-	console.log(arr);
+function addRow(arr){	
 	for (i = 0; i < arr.length; i++){
-
-		let row = document.createElement('tr');
-		row.setAttribute('id', i);
-
-		if(i%2 == 0) row.setAttribute('class', "white");
-
-		let r_id = document.createElement('td');
-		r_id.textContent = arr[i].REIMB_ID;
-
-		let Amount = document.createElement('td');
-		Amount.textContent = arr[i].AMOUNT;
-
-		let Submitted = document.createElement('td');
-		Submitted.textContent = arr[i].SUBMITTED;
-
-		let Resolved = document.createElement('td');
-		Resolved.textContent = arr[i].RESOLVED;
-
-		let Description = document.createElement('td');
-		Description.textContent = arr[i].DESCRIPTION;
-
-		let Recipt = document.createElement('td');
-		Recipt.textContent = arr[i].RECEIPT;
-
-		let Payment_ID = document.createElement('td');
-		Payment_ID.textContent = arr[i].PAYMENT_ID;
-
-		let Author_ID = document.createElement('td');
-		Author_ID.textContent = arr[i].AUTHOR_ID;
-
-		let Resolver_ID = document.createElement('td');
-		Resolver_ID.textContent = arr[i].RESOLVER_ID;
-
-		let Status_ID = document.createElement('td');
-		Status_ID.textContent = arr[i].STATUS_ID;
-
-		let Type_ID = document.createElement('td');
-		Type_ID.textContent = arr[i].TYPE_ID;
-
-		document.getElementById("TAB").appendChild(row);
-		document.getElementById(i).appendChild(r_id);
-		document.getElementById(i).appendChild(Amount);
-		document.getElementById(i).appendChild(Submitted);
-		document.getElementById(i).appendChild(Resolved);
-		document.getElementById(i).appendChild(Description);
-		document.getElementById(i).appendChild(Recipt);
-		document.getElementById(i).appendChild(Payment_ID);
-		document.getElementById(i).appendChild(Author_ID);
-		document.getElementById(i).appendChild(Resolver_ID);
-		document.getElementById(i).appendChild(Status_ID);
-		document.getElementById(i).appendChild(Type_ID);
+		addLine(arr[i], i);
 	}
 }
 
-function addSingle(e){
 
+
+function addLine(obj, i){
+	
+	let row = document.createElement('tr');
+	row.setAttribute('id', i);
+
+	if(i%2 == 0) row.setAttribute('class', "white");
+
+	let r_id = document.createElement('td');
+	r_id.textContent = obj.REIMB_ID;
+	console.log(obj.REIMB_ID);
+
+	let Amount = document.createElement('td');
+	Amount.textContent = obj.AMOUNT;
+
+	let Submitted = document.createElement('td');
+	Submitted.textContent = obj.SUBMITTED;
+
+	let Resolved = document.createElement('td');
+	Resolved.textContent = isResolved(obj.RESOLVED);
+
+	let Description = document.createElement('td');
+	Description.textContent = obj.DESCRIPTION;
+
+	let Recipt = document.createElement('td');
+	Recipt.textContent = obj.RECEIPT;
+
+	let Payment_ID = document.createElement('td');
+	Payment_ID.textContent = obj.PAYMENT_ID;
+
+	let Author_ID = document.createElement('td');
+	Author_ID.textContent = "#" + obj.AUTHOR_ID;
+
+	let Resolver_ID = document.createElement('td');
+	Resolver_ID.textContent = whatResolver(obj.RESOLVER_ID);
+
+	let Status_ID = document.createElement('td');
+	Status_ID.textContent = whatStatus(obj.STATUS_ID);
+
+	let Type_ID = document.createElement('td');
+	Type_ID.textContent = whatType(obj.TYPE_ID);
+
+	document.getElementById("TAB").appendChild(row);
+	document.getElementById(i).appendChild(r_id);
+	document.getElementById(i).appendChild(Amount);
+	document.getElementById(i).appendChild(Submitted);
+	document.getElementById(i).appendChild(Resolved);
+	document.getElementById(i).appendChild(Description);
+	document.getElementById(i).appendChild(Recipt);
+	document.getElementById(i).appendChild(Payment_ID);
+	document.getElementById(i).appendChild(Author_ID);
+	document.getElementById(i).appendChild(Resolver_ID);
+	document.getElementById(i).appendChild(Status_ID);
+	document.getElementById(i).appendChild(Type_ID);
 }
 
+
+
+function whatType(t){
+	if (t == 1) return "Lodging";
+	if (t == 2) return "Travel";
+	if (t == 3) return "Food";
+	if (t == 4) return "Other";
+	return "Other";
+}
+
+
+
+function whatStatus(stat){
+	if (stat == 1) return "Pending";
+	if (stat == 2) return "Approved";
+	if (stat == 3) return "Denied";
+	return "Pending";
+}
+
+
+
+function whatResolver(res){
+	if (res == 0) return "Revature";
+	return res;
+}
+
+
+
+function isResolved(isR){
+	if (isR == null){return "Pending"};
+	return isR;
+}
 
 
 
@@ -306,7 +340,6 @@ function sortStatus(arr, str){
 
 	addRow(matches);
 }
-
 
 
 
@@ -339,6 +372,7 @@ function reset(arr){
 // clearTable() removes all reinbursements. Keeps table column labels/headers.
 
 function clearTable(){
+	console.log("table cleared");
 	const table = document.getElementById("TAB");
 	while (table.lastElementChild) {
 		if(document.getElementById("TAB").childElementCount == 1) break;
@@ -348,22 +382,42 @@ function clearTable(){
 
 
 
-
 function search(s){
 
+	clearTable();
 	let value = document.getElementById("RID").value;
+
 	console.log(value);
 
 
 	for (let i = 0; i < s.length; i++){
-
 		if (s[i].REIMB_ID == value){
+			console.log("matched");	
+			console.log(s[i].REIMB_ID);
+			addLine(s[i], i);
+		}
+	}
+}
 
-			console.log("matched");
-			clearTable();
-			addRow(s[i]);
+function employeeREI(eyid){
+	fetch("http://localhost:8080/crei",{
+			method: "get",
+	})
+	.then((response) => response.json())
+	.then((jsRES) => setEDB(jsRES, eyid));	
+}
+
+
+function setEDB(arr, estb){
+
+	temp = [];
+
+	for(i = 0; i < arr.length; i++){
+		if (arr[i].AUTHOR_ID == estb){
+			temp.push(arr[i])
 		}
 	}
 
-
+	eDB = temp;
+	addRow(eDB);
 }

@@ -42,18 +42,18 @@
 		<div id="sortNav" style="float: center; text-align: center; padding-top: 2%;">
 
 			<p style="font-weight: bold;">SORT BY</p><br>
-			<button onclick="reset(getReimbursements());">View All</button>
+			<button onclick="reset(employeeREI(7));">View All</button>
 
 			<label style="margin-left: 2em;">Status: </label>
-			<button onclick="sortStatus(db, 2);">Approved</button>
-			<button onclick="sortStatus(db, 1);">Pending</button>
-			<button onclick="sortStatus(db, 3);">Denied</button>
+			<button onclick="sortStatus(eDB, 2);">Approved</button>
+			<button onclick="sortStatus(eDB, 1);">Pending</button>
+			<button onclick="sortStatus(eDB, 3);">Denied</button>
 
 			<label style="margin-left: 2em;">Type: </label>
-			<button onclick="sortType(db, 1);">Lodging</button>
-			<button onclick="sortType(db, 2);">Travel</button>
-			<button onclick="sortType(db, 3);">Food</button>
-			<button onclick="sortType(db, 4);">Other</button>
+			<button onclick="sortType(eDB, 1);">Lodging</button>
+			<button onclick="sortType(eDB, 2);">Travel</button>
+			<button onclick="sortType(eDB, 3);">Food</button>
+			<button onclick="sortType(eDB, 4);">Other</button>
 		</div>
 
 		<!-- Expense Reinbursement System Table Results -->
@@ -81,7 +81,7 @@
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
 
-//getReimbursements();
+employeeREI(7);
 
 
 // Changes Approval Status according to Financial Manager's form inputs.
