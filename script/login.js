@@ -161,7 +161,7 @@ function init(){
 			document.getElementById("login_box").style.display = "block";
 		}else{
 			
-
+			localStorage.removeItem("user");
 			user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
 			hideChildren("maindiv");
 			document.getElementById("login_box").style.display = "block";
@@ -266,9 +266,11 @@ function init(){
 				
 				if(user.name == "admin"){
 					hideChildren("maindiv");
+					localStorage.setItem("user", JSON.stringify(user));
 					document.getElementById("admin_box").style.display = "block";
 					document.getElementById("login_button").innerText = user.name;
 				}else if(user.roleid != "1"){
+					localStorage.setItem("user", JSON.stringify(user));
 					document.getElementById("login_button").innerText = user.name;
 					window.location = "ERS/finance.html";
 				}else{
