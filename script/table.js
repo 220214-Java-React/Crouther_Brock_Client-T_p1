@@ -323,3 +323,16 @@ function clearTable(){
 		else{table.removeChild(table.lastElementChild);}
 	}
 }
+
+
+
+
+function search(arr){
+	for (i = 0; i < arr.length; i++){
+		let value = 0;
+		if (arr[i].Reimbursement_ID == value){
+			clearTable();
+			addRow(arr[i]);
+		}
+	}
+}
