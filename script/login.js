@@ -10,8 +10,8 @@ function init(){
 	//array for the user objects
 	var users = [];
 	
-	//name:pwd pairs so you can use the Object.keys(usersNamePwdObject).includes() 
-	var usersNamePwdObject = {};
+	//a 2d array of names and roles, used in popUsers
+	var usersNameRoleArray = [[],[]];
 	
 	//regex for the email pattern, not foolproof
 	var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -45,9 +45,6 @@ function init(){
 	
 	//initialize the users objects
 	getUsers();
-	
-	//load session data if any and redirect
-	restoreSession();
 
 	//pulls data from the ERS_USERS and checks local storage
 	function getUsers(){
@@ -55,6 +52,7 @@ function init(){
 		let trash = {
 			action:"getusers"
 		};
+		document.getElementById("loadscreen").style.display = "block";
 		fetch("http://localhost:8080/myservlet",{
 				method: "post",
 				body: JSON.stringify(trash)
@@ -69,38 +67,53 @@ function init(){
 	function setUsers(myData){
 		
 		users = myData;
-		usersNamePwdObject = {};
+		usersNameRoleArray = [[],[]];
 		
 		users.forEach(function(each){
-			
-			Object.defineProperty(usersNamePwdObject, each.username, {value:each.pwd});
+
+			if(each.username != "admin"){
+				usersNameRoleArray[0].push(each.username);
+				usersNameRoleArray[1].push(each.roleid);
+			}
 		});
-		
+
 		popUsers();
-		
+		document.getElementById("loadscreen").style.display = "none";
 	}
 	
-	//checks localstorage for user info and if found sets and redirects
-	function restoreSession(){
+	//fill out the table of users for the admin to modify
+	function popUsers(){
 		
-		//check for saved login information and load accordingly
-		let temp = localStorage.getItem("ERS_User");
-		if(temp != null){
+		let myLines = `<tr>
+						<th>Username:</th>
+						<th>Role:</th>
+						<th>Modify:</th>
+					</tr>`;
+		
+		for(let i = 0; i < usersNameRoleArray[0].length; i++){
+
+			myLines += `<tr>
+			<td id="username_${i}">${usersNameRoleArray[0][i]}</td>
+			<td><select class="users_roles" id="role_${i}">
+			<option value="pending">pending</option>
+			<option value="admin">admin</option>
+			<option value="mngr">mngr</option>
+			<option value="emp">emp</option>
+			<option value="delete">delete</option>
+			</select></td>
+			<td><button type="button" id="submit_${i}">submit</button></td></tr>`;
+		}
+		
+		document.getElementById("admin_box_table").innerHTML = myLines;
+		
+		//set the drop down option to the users role
+		let tempOptions = document.getElementsByClassName("users_roles");
+		let myUserRoles = Array.from(tempOptions);
+		
+		for(let i = 0; i < myUserRoles.length; i++){
 			
-			user = JSON.parse(temp);
-			document.getElementById("login_button").innerText = user.name;
-			
-			if(user.name == "admin"){
-				
-				hideChildren("maindiv");
-				document.getElementById("admin_box").style.display = "block";
-				
-			}else if(user.roleid != "1"){
-			
-				window.location = "ERS/finance.html";
-			}
-			
-			
+			myUserRoles[i].selectedIndex = parseInt(usersNameRoleArray[1][i])-1;
+			document.getElementById(`submit_${i}`).addEventListener("click", modRole);
 		}
 	}
 	
@@ -147,7 +160,7 @@ function init(){
 			document.getElementById("login_box").style.display = "block";
 		}else{
 			
-			localStorage.removeItem("ERS_User");
+
 			user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
 			hideChildren("maindiv");
 			document.getElementById("login_box").style.display = "block";
@@ -187,6 +200,7 @@ function init(){
 			alert("You must enter a password.");
 		}else{
 			user.action = "checkpwd";
+			document.getElementById("loadscreen").style.display = "block";
 			fetch("http://localhost:8080/myservlet",{
 					method: "post",
 					body: JSON.stringify(user)
@@ -217,20 +231,19 @@ function init(){
 			user.roleid = "1";
 			user.action = "register";
 			
-			fetch("http://localhost:8080/myservlet",{
-				method: "post",
-				body: JSON.stringify(user)
-			});
-			
-			alert("Registration submitted.\nAwaiting admin approval.");
-			
 			myUsername.value = "";
 			myPassword.value = "";
 			myEmail.value = "";
 			myFname.value = "";
 			myLname.value = "";
 			
-			getUsers();
+			document.getElementById("loadscreen").style.display = "block";
+			alert("Registration submitted.\nAwaiting admin approval.");
+			
+			fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(user)
+			}).then(() => getUsers());
 			
 		}else{
 			
@@ -239,88 +252,64 @@ function init(){
 		}
 	}
 	
-	//checks the submitted info against the key value pairs created in setUsers, forks to either the admin screen or the 
+	//uses the username and the boolean value returned from logIn, forks to either the admin screen or the finance page
 	function checkUser(myData){
 
-		var myNames = Object.getOwnPropertyNames(usersNamePwdObject);
-		//let myPwds = myNames.map(key => usersNamePwdObject[key]);
 		user.pwdBool = myData.trim();
 
-		if(myNames.includes(user.name)){
+		if(usersNameRoleArray[0].includes(user.name) || user.name == "admin"){
 
 			if(user.pwdBool == "true"){
+				
 				if(user.name == "admin"){
 					hideChildren("maindiv");
 					document.getElementById("admin_box").style.display = "block";
 					document.getElementById("login_button").innerText = user.name;
-					localStorage.setItem("ERS_User", JSON.stringify(user));
-				}else{
+				}else if(user.roleid != "1"){
 					document.getElementById("login_button").innerText = user.name;
-					localStorage.setItem("ERS_User", JSON.stringify(user));
 					window.location = "ERS/finance.html";
+				}else{
+					alert("The user is pending approval from an admin.");
 				}
 			}else{
 				alert("The credentials do not match our records.");
 			}
 		}else{
-			alert("The username do not match our records.");
+			alert("The credentials do not match our records.");
 		}
-		
+		document.getElementById("loadscreen").style.display = "none";
 	}
 	
-	
-	//fill out the table of users for the admin to modify
-	function popUsers(){
-		
-		let myLines = `<tr>
-						<th>Username:</th>
-						<th>Role:</th>
-						<th>Modify:</th>
-					</tr>`;
-		
-		for(let i = 0; i < users.length; i++){
-			myLines += `<tr>
-			<td id="username_${i}">${users[i].username}</td>
-			<td><select class="users_roles" id="role_${i}">
-			<option value="pending">pending</option>
-			<option value="admin">admin</option>
-			<option value="mngr">mngr</option>
-			<option value="emp">emp</option>
-			<option value="delete">delete</option>
-			</select></td>
-			<td><button type="button" id="submit_${i}">submit</button></td></tr>`;
-		}
-		
-		document.getElementById("admin_box_table").innerHTML = myLines;
-		
-		//set the option to the users role
-		let tempOptions = document.getElementsByClassName("users_roles");
-		let myUserRoles = Array.from(tempOptions);
-		
-		for(let i = 0; i < users.length; i++){
-			
-			myUserRoles[i].selectedIndex = parseInt(users[i].roleid)-1;
-			document.getElementById(`submit_${i}`).addEventListener("click", modRole);
-		}
-	}
-	
-	//modify the role of the user
+	//modify the role of the user or delete user
 	function modRole(e){
 		
 		let temp = e.target.id;
-		let myIndex = temp.substring(temp.length -1);
+		let userIndex = temp.substring(temp.length -1);
+		let roleIndex = document.getElementById(`role_${userIndex}`).selectedIndex;
 
-		let myUser = {
-			name: document.getElementById(`username_${myIndex}`).innerText,
-			roleid: roles.indexOf(document.getElementById(`role_${myIndex}`).value)+1,
-			action: "modrole"
+		if(roleIndex != user.roleid && roleIndex > 0){
+			
+			let myUser = {
+				name: document.getElementById(`username_${userIndex}`).innerText,
+				roleid: (roleIndex+1).toString()
+			}
+			
+			if(roleIndex != 4){
+				myUser.action = "modrole";
+			}else{
+				myUser.action = "delete";
+			}
+
+			document.getElementById("loadscreen").style.display = "block";
+			fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(myUser)
+			}).then(() => getUsers());
+
 		}
-		console.log(myUser);
-		fetch("http://localhost:8080/myservlet",{
-			method: "post",
-			body: JSON.stringify(myUser)
-		});
-		
-		getUsers();
 	}
+	
+	/*
+	FINANCE JS HERE
+	*/
 }
