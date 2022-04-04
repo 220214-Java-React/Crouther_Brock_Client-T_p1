@@ -10,209 +10,227 @@
 
 
 
-// SAMPLE DATA 
-let db = [
+//SAMPLE DATA 
+var db = [
 	{
-		"Reimbursement_ID" : "123",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Food"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Lodging"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Pending",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Denied",
-		"Type_ID" : "Travel"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Pending",
-		"Type_ID" : "Travel"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
-	},{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	},
 	{
-		"Reimbursement_ID" : "12345",
-		"Amount" : "$100.00",
-		"Submitted": "10:37 03/30/2022",
-		"Resolved" : "10:38 03/30/2022",
-		"Description" : "Something Important...",
-		"Recipt" : "ABC Inc.",
-		"Payment_ID" : "VISA",
-		"Author_ID" : "Myles Crouther",
-		"Resolver_ID" : "Revature",
-		"Status_ID" : "Approved",
-		"Type_ID" : "Other"
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
+	},
+	{
+		"REIMB_ID" : "12345",
+		"AMOUNT" : "$100.00",
+		"SUBMITTED": "10:37 03/30/2022",
+		"RESOLVED" : "10:38 03/30/2022",
+		"DESCRIPTION" : "Something Important...",
+		"RECEIPT" : "ABC Inc.",
+		"PAYMENT_ID" : "VISA",
+		"AUTHOR_ID" : "Myles Crouther",
+		"RESOLVER_ID" : "Revature",
+		"STATUS_ID" : "Approved",
+		"TYPE_ID" : "Other"
 	}
 ];
 
 
 
+
+function getReimbursements(){
+	fetch("http://localhost:8080/crei",{
+			method: "get",
+	})
+	.then((response) => response.json())
+	.then((rei) => setDB(rei));	
+}
+
+function setDB(arr){
+	console.log(arr);
+	db = arr;
+	addRow(db);
+}
+
+
+
 /** addRow(arr) Creates a Table Row Entry for each value stored in the (arr)**/
 function addRow(arr){
-
+	console.log(arr);
 	for (i = 0; i < arr.length; i++){
 
 		let row = document.createElement('tr');
@@ -221,37 +239,37 @@ function addRow(arr){
 		if(i%2 == 0) row.setAttribute('class', "white");
 
 		let r_id = document.createElement('td');
-		r_id.textContent = arr[i].Reimbursement_ID;
+		r_id.textContent = arr[i].REIMB_ID;
 
 		let Amount = document.createElement('td');
-		Amount.textContent = arr[i].Amount;
+		Amount.textContent = arr[i].AMOUNT;
 
 		let Submitted = document.createElement('td');
-		Submitted.textContent = arr[i].Submitted;
+		Submitted.textContent = arr[i].SUBMITTED;
 
 		let Resolved = document.createElement('td');
-		Resolved.textContent = arr[i].Resolved;
+		Resolved.textContent = arr[i].RESOLVED;
 
 		let Description = document.createElement('td');
-		Description.textContent = arr[i].Description;
+		Description.textContent = arr[i].DESCRIPTION;
 
 		let Recipt = document.createElement('td');
-		Recipt.textContent = arr[i].Recipt;
+		Recipt.textContent = arr[i].RECEIPT;
 
 		let Payment_ID = document.createElement('td');
-		Payment_ID.textContent = arr[i].Payment_ID;
+		Payment_ID.textContent = arr[i].PAYMENT_ID;
 
 		let Author_ID = document.createElement('td');
-		Author_ID.textContent = arr[i].Author_ID;
+		Author_ID.textContent = arr[i].AUTHOR_ID;
 
 		let Resolver_ID = document.createElement('td');
-		Resolver_ID.textContent = arr[i].Resolver_ID;
+		Resolver_ID.textContent = arr[i].RESOLVER_ID;
 
 		let Status_ID = document.createElement('td');
-		Status_ID.textContent = arr[i].Status_ID;
+		Status_ID.textContent = arr[i].STATUS_ID;
 
 		let Type_ID = document.createElement('td');
-		Type_ID.textContent = arr[i].Type_ID;
+		Type_ID.textContent = arr[i].TYPE_ID;
 
 		document.getElementById("TAB").appendChild(row);
 		document.getElementById(i).appendChild(r_id);
@@ -268,6 +286,10 @@ function addRow(arr){
 	}
 }
 
+function addSingle(e){
+
+}
+
 
 
 
@@ -279,7 +301,7 @@ function sortStatus(arr, str){
 	let matches = [];
 
 	for (i = 0; i < arr.length; i++){
-		if (arr[i].Status_ID == str){matches.push(arr[i]);}
+		if (arr[i].STATUS_ID == str){matches.push(arr[i]);}
 	}
 
 	addRow(matches);
@@ -297,7 +319,7 @@ function sortType(arr, str){
 	let matches = [];
 
 	for (i = 0; i < arr.length; i++){
-		if (arr[i].Type_ID == str){matches.push(arr[i]);}
+		if (arr[i].TYPE_ID == str){matches.push(arr[i]);}
 	}
 
 	addRow(matches);
@@ -327,12 +349,21 @@ function clearTable(){
 
 
 
-function search(arr){
-	for (i = 0; i < arr.length; i++){
-		let value = 0;
-		if (arr[i].Reimbursement_ID == value){
+function search(s){
+
+	let value = document.getElementById("RID").value;
+	console.log(value);
+
+
+	for (let i = 0; i < s.length; i++){
+
+		if (s[i].REIMB_ID == value){
+
+			console.log("matched");
 			clearTable();
-			addRow(arr[i]);
+			addRow(s[i]);
 		}
 	}
+
+
 }

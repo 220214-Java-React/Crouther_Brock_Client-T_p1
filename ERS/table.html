@@ -31,7 +31,7 @@
 
 				<label for="RID">Modify RID:</label>
 				<input type="text" id="RID" name="RID">
-				<button onclick=""><img style="height:1.2em; width: auto; padding-top: .3em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"></button>
+				<button onclick="search(db);"><img style="height:1.2em; width: auto; padding-top: .3em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"></button>
 				<button onclick="changeStatus(true, db)">Approve</button>
 				<button onclick="changeStatus(false, db)">Deny</button>
 			</form>
@@ -42,18 +42,18 @@
 		<div id="sortNav" style="float: center; text-align: center; padding-top: 2%;">
 
 			<p style="font-weight: bold;">SORT BY</p><br>
-			<button onclick="reset(db);">View All</button>
+			<button onclick="reset(getReimbursements());">View All</button>
 
 			<label style="margin-left: 2em;">Status: </label>
-			<button onclick="sortStatus(db, 'Approved');">Approved</button>
-			<button onclick="sortStatus(db, 'Pending');">Pending</button>
-			<button onclick="sortStatus(db, 'Denied');">Denied</button>
+			<button onclick="sortStatus(db, 2);">Approved</button>
+			<button onclick="sortStatus(db, 1);">Pending</button>
+			<button onclick="sortStatus(db, 3);">Denied</button>
 
 			<label style="margin-left: 2em;">Type: </label>
-			<button onclick="sortType(db, 'Lodging');">Lodging</button>
-			<button onclick="sortType(db, 'Travel');">Travel</button>
-			<button onclick="sortType(db, 'Food');">Food</button>
-			<button onclick="sortType(db, 'Other');">Other</button>
+			<button onclick="sortType(db, 1);">Lodging</button>
+			<button onclick="sortType(db, 2);">Travel</button>
+			<button onclick="sortType(db, 3);">Food</button>
+			<button onclick="sortType(db, 4);">Other</button>
 		</div>
 
 		<!-- Expense Reinbursement System Table Results -->
@@ -81,8 +81,7 @@
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
 
-getReimbursements();
-addRow(db);
+//getReimbursements();
 
 
 // Changes Approval Status according to Financial Manager's form inputs.
