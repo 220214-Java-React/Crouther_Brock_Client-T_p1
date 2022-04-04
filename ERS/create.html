@@ -28,26 +28,23 @@
 
 	<div class="fw-box" id="cRei" style="background-color: white; min-height: 60vh;">
 
-
-		<form style="display: inline-block; padding-top:10%;" method = "get" action ="/cRei">
+		<form style="display: inline-block;  padding-top: 5vh;" method ="post" action ="http://localhost:8080/crei">
 
 			<label style="float: left;" for="amo">Amount:</label>
-			<input  type="number" step="0.01" id="amo" name="amo"><br>
+			<input type="number" id="amo" name="amo"><br>
 
 			<label style="float: left;"for="desc">Description:</label>
 			<input type="text" id="desc" name="desc"><br>
 
-			<label style="float: left;" for="receipt">Receipt (Link):</label>
-			<input type="text" id="receipt" name="receipt"><br>
-
-			<label style="float: left;" for="pid">Author ID:</label>
-			<input type="text" id="pid" name="pid"><br>
+			<label style="float: left;" for="aid">Author ID:</label>
+			<input type="number" id="aid" name="aid"><br>
 
 			<label style="float: left;" for="type">Type:</label>
 			<input type="text" id="type" name="type"><br><br>
 
 			<input type="submit" value="Submit">
 		</form> 
+
 	</div>
 </body>
 
