@@ -54,6 +54,7 @@ function init(){
 		};
 		document.getElementById("loadscreen").style.display = "block";
 		fetch("http://localhost:8080/myservlet",{
+				header:"admin",
 				method: "post",
 				body: JSON.stringify(trash)
 		})
@@ -208,6 +209,7 @@ function init(){
 			user.action = "checkpwd";
 			document.getElementById("loadscreen").style.display = "block";
 			fetch("http://localhost:8080/myservlet",{
+					header:"admin",
 					method: "post",
 					body: JSON.stringify(user)
 			})
@@ -248,6 +250,7 @@ function init(){
 			alert("Registration submitted.\nAwaiting admin approval.");
 			
 			fetch("http://localhost:8080/myservlet",{
+				header:"admin",
 				method: "post",
 				body: JSON.stringify(user)
 			}).then(() => getUsers());
@@ -322,6 +325,7 @@ function init(){
 
 			document.getElementById("loadscreen").style.display = "block";
 			fetch("http://localhost:8080/myservlet",{
+				header:"admin",
 				method: "post",
 				body: JSON.stringify(myUser)
 			}).then(() => getUsers());
@@ -335,6 +339,7 @@ function init(){
 		user.action = "setactive";
 		
 		fetch("http://localhost:8080/myservlet",{
+				header:"admin",
 				method: "post",
 				body: JSON.stringify(user)
 		})
