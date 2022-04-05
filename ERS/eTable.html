@@ -23,34 +23,8 @@
 
 <body onload="getUsers()">
 
-	<div id="mod_panel">
-		<form>
-			<label style="margin:5px;" id="mod_label"></label></br>
-			<input class="mod_inputs" type="text" id="mod_amount" placeholder="amount" size="20">
-			<select id="mod_status">
-				<option value="1">pending</option>
-				<option value="3">cancel</option>
-			</select>
-			<select id="mod_type">
-				<option value="1">lodging</option>
-				<option value="2">travel</option>
-				<option value="3">food</option>
-				<option value="4">other</option>
-			</select>
-			<button type="button" id="mod_panel_submit" onclick="modifyRei()">submit</button>
-		</form>
-	</div>
 	<!-- Web Content Container: General Page Styling Applied -->
 	<div class="fw-box" id="fw_box">
-
-		<div id="modifyNav" style="float: center; text-align: center; padding-top: 2%;">
-			<form>
-
-				<label for="RID">Modify RID:</label>
-				<input type="text" id="RID" name="RID">
-				<button onclick="loadRei()">MOD</button>
-			</form>
-		</div>
 
 
 		<!-- Sort/Filter Navigation Bar -->
@@ -96,8 +70,6 @@
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
 
-
-
 	var users = [];
 	var user = {};
 	var myStatuses = ["", "pending", "approved", "denied"];
@@ -133,51 +105,6 @@
 		employeeREI(user.userid);
 	}
 	
-	function loadRei(){
-		
-		let myId = parseInt(document.getElementById("RID").value);
-		
-		if(!isNaN(myId)){
-
-			var trash = {
-				reimb_id: myId,
-				action: "getreimb"
-			}
-			console.log(trash);
-			fetch("http://localhost:8080/myservlet",{
-					method: "post",
-					body: JSON.stringify(trash)
-			})
-			.then((response) => response.json())
-			.then((data) => setRei(data));
-		}else{
-			alert("Please enter a valid RID.");
-		}
-	}
-	
-	function setRei(myData){
-		console.log(myData);
-		myRei = myData;
-		document.getElementById("mod_panel").style.display = "block";
-		
-		document.getElementById("mod_amount").value = myData.amount;
-		document.getElementById("mod_status").selectedIndex = parseInt(myData.status_id);
-		document.getElementById("mod_type").selectedIndex = parseInt(myData.type_id);
-	}
-	
-
-// Changes Approval Status according to Financial Manager's form inputs.
-function changeStatus(approved, arr){
-	
-	for (i = 0; i < arr.length; i++){
-		if (arr[i].Reimbursement_ID == document.getElementById("RID").value){
-
-			if(approved){arr[i].Status_ID = "Approved";}
-			else{arr[i].Status_ID = "Denied";}
-		}
-	}
-	reset(arr);
-}
 </script>
 
 

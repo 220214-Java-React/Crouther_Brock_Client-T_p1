@@ -58,6 +58,7 @@
 				
 				<div class="center" style="padding-bottom: 5%;">
 					<button onclick="addTable();" style="width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Review</button>
+					<button onclick="addEdit();" style="margin-left:3em;width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Edit</button>
 					<button onclick="addCreate();" style="margin-left:3em; width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Create</button></div>
 			</div>
 
@@ -180,6 +181,18 @@
 		footer.parentNode.insertBefore(ifrm, footer);
 
 		ifrm.setAttribute('src', 'create.html');
+	}
+
+	function addEdit(){
+		document.getElementById("wm").remove();
+
+		var ifrm = document.createElement('iframe');
+		ifrm.setAttribute('id', 'ifrm');
+
+		var footer = document.getElementById('footer');
+		footer.parentNode.insertBefore(ifrm, footer);
+
+		ifrm.setAttribute('src', 'edit.html');
 	}
 
 	function hi(){window.location = "finance.html";}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Webpage specific metadata and resources -->
+<head>
+
+	<!-- Meta Data Tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<!-- Tab Decorations -->
+	<title>Create Reinbursement</title>
+	<link rel="icon" href="https://revature.com/wp-content/themes/revature/imgs/logo-white-color.png">
+
+
+	<!-- External Resources -->
+	<link rel="stylesheet" type="text/css" href="https://myles.works/css/AvantFlat.css">
+</head>
+
+
+<!-- Web Content -->
+<body style="text-align: center;">
+
+	
+	<!-- Create Reinburement -->
+
+	<div class="fw-box" id="up" style="background-color: white; min-height: 60vh;">
+
+		<div><form style="display: inline-block;  padding-top: 5vh;" method ="post" action ="http://localhost:8080/img" target="_blank" enctype="multipart/form-data">
+			<input type="file" name="file"/>
+			<input type="submit" value="Upload"/>
+		</form></div>
+
+		<form style="display: inline-block;  padding-top: 5vh;" method ="get" action ="http://localhost:8080/up" target="_blank">
+
+			<label style="float: left;" for="rid">RID:</label>
+			<input type="number" id="rid" name="rid"><br>
+
+			<label style="float: left;" for="amo">Amount:</label>
+			<input type="number" id="amo" name="amo"><br>
+
+			<label style="float: left;"for="desc">Description:</label>
+			<input type="text" id="desc" name="desc"><br>
+
+			<label style="float: left;" for="aid">Author ID:</label>
+			<input type="number" id="aid" name="aid"><br>
+
+			<label style="float: left;" for="type">Type:</label>
+			<input type="text" id="type" name="type"><br><br>
+
+			<input type="submit" value="Submit">
+		</form> 
+
+	</div>
+</body>
+
+</html>
+
+
+<!-- Webpage specific JavaScript that's irrelevant to *All* external pages onsubmit="return hi()" -->
+<script type="text/javascript">
+	function hi(){parent.location.reload();}
+</script>
+
+
+<!-- Webpage specific styling that contradicts General/External Guidline defaults -->
+<style type="text/css">
+	label{
+		width: 10em;
+		text-align: left;
+	}
+</style>
