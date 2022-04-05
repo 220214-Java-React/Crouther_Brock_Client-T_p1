@@ -5,7 +5,7 @@ function init(){
 	
 	//blank user object, you can use this solo to pass an action to the servlet in addition to sending a completed user 
 	//ACTIONS: "registerUser", "getUsers", 
-	var user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
+	var user = {username: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
 	
 	//array for the user objects
 	var users = [];
@@ -54,7 +54,6 @@ function init(){
 		};
 		document.getElementById("loadscreen").style.display = "block";
 		fetch("http://localhost:8080/myservlet",{
-				header:"admin",
 				method: "post",
 				body: JSON.stringify(trash)
 		})
@@ -69,9 +68,13 @@ function init(){
 		
 		users = myData;
 		usersNameRoleArray = [[],[]];
-		
+
 		users.forEach(function(each){
 
+			if(each.is_active == "true"){
+				user = each;
+			}
+			
 			if(each.username != "admin"){
 				usersNameRoleArray[0].push(each.username);
 				usersNameRoleArray[1].push(each.roleid);
@@ -160,9 +163,11 @@ function init(){
 			hideChildren("maindiv");
 			document.getElementById("login_box").style.display = "block";
 		}else{
+			user.action = "setactive";
+			user.is_active = "false";
+			setActive();
 			
-			localStorage.removeItem("user");
-			user = {name: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
+			user = {username: "", pwd: "", email: "", fname: "", lname: "", roleid: "", action: ""};
 			hideChildren("maindiv");
 			document.getElementById("login_box").style.display = "block";
 			e.target.innerText = "login";
@@ -192,10 +197,10 @@ function init(){
 		
 		let myUsernameElement = document.getElementById("login_box_login_username");
 		let myPasswordElement = document.getElementById("login_box_login_password");
-		user.name = myUsernameElement.value;
+		user.username = myUsernameElement.value;
 		user.pwd = myPasswordElement.value;
 		
-		if(!user.name){
+		if(!user.username){
 			alert("You must enter a username.");
 		}else if(!user.pwd){
 			alert("You must enter a password.");
@@ -203,12 +208,12 @@ function init(){
 			user.action = "checkpwd";
 			document.getElementById("loadscreen").style.display = "block";
 			fetch("http://localhost:8080/myservlet",{
-					header: "admin",
 					method: "post",
 					body: JSON.stringify(user)
 			})
 			.then((response) => response.text())
 			.then((data) => checkUser(data));
+			
 			myUsernameElement.value = "";
 			myPasswordElement.value = "";
 		}
@@ -225,7 +230,7 @@ function init(){
 		
 		if(myEmail.value.match(emailPattern)){
 			
-			user.name = myUsername.value;
+			user.username = myUsername.value;
 			user.pwd = myPassword.value;
 			user.email = myEmail.value;
 			user.fname = myFname.value;
@@ -243,7 +248,6 @@ function init(){
 			alert("Registration submitted.\nAwaiting admin approval.");
 			
 			fetch("http://localhost:8080/myservlet",{
-				header:"admin",
 				method: "post",
 				body: JSON.stringify(user)
 			}).then(() => getUsers());
@@ -259,20 +263,31 @@ function init(){
 	function checkUser(myData){
 
 		user.pwdBool = myData.trim();
-
-		if(usersNameRoleArray[0].includes(user.name) || user.name == "admin"){
+		console.log(user.pwdBool);
+		if(usersNameRoleArray[0].includes(user.username) || user.username == "admin"){
 
 			if(user.pwdBool == "true"){
 				
-				if(user.name == "admin"){
+				for(let i = 0; i < users.length; i++){
+					if(users[i].username == user.username){
+						user = users[i];
+					}
+				}
+				
+				if(user.username == "admin"){
 					hideChildren("maindiv");
-					localStorage.setItem("user", JSON.stringify(user));
 					document.getElementById("admin_box").style.display = "block";
-					document.getElementById("login_button").innerText = user.name;
-				}else if(user.roleid != "1"){
-					localStorage.setItem("user", JSON.stringify(user));
-					document.getElementById("login_button").innerText = user.name;
-					window.location = "ERS/finance.html";
+					document.getElementById("login_button").innerText = user.username;
+					user.is_active = "true";
+					setActive();
+				}else if(user.roleid == 3){
+					document.getElementById("login_button").innerText = user.username;
+					user.is_active = "true";
+					setActive();
+				}else if(user.roleid == 4){
+					document.getElementById("login_button").innerText = user.username;
+					user.is_active = "true";
+					setActive();
 				}else{
 					alert("The user is pending approval from an admin.");
 				}
@@ -295,7 +310,7 @@ function init(){
 		if(roleIndex != user.roleid && roleIndex > 0){
 			
 			let myUser = {
-				name: document.getElementById(`username_${userIndex}`).innerText,
+				username: document.getElementById(`username_${userIndex}`).innerText,
 				roleid: (roleIndex+1).toString()
 			}
 			
@@ -307,7 +322,6 @@ function init(){
 
 			document.getElementById("loadscreen").style.display = "block";
 			fetch("http://localhost:8080/myservlet",{
-				header: "admin",
 				method: "post",
 				body: JSON.stringify(myUser)
 			}).then(() => getUsers());
@@ -315,7 +329,26 @@ function init(){
 		}
 	}
 	
-	/*
-	FINANCE JS HERE
-	*/
+	//set the boolean to record that a user is logged in
+	function setActive(){
+		
+		user.action = "setactive";
+		
+		fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(user)
+		})
+		.then((response) => response.text())
+		.then((data) => redirect());
+	}
+	
+	//redirect the user to a page according to their role
+	function redirect(){
+		
+		if(user.roleid == 3){
+			window.location = "ERS/finance.html";
+		}else if(user.roleid == 4){
+			window.location = "ERS/employee.html";
+		}
+	}
 }

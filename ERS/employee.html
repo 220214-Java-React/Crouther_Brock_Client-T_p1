@@ -21,7 +21,7 @@
 
 
 <!-- Web Content -->
-<body style="background-color: #00183c; overflow: hidden; height: 100vh; position: relative; overflow-y: scroll;">
+<body onload="getUsers()" style="background-color: #00183c; overflow: hidden; height: 100vh; position: relative; overflow-y: scroll;">
 
 
 	<!-- Navigation -->
@@ -30,7 +30,7 @@
 		<img style="padding: 2vh 2vw 2vh 2vw; display: inline-block; max-height: 10vh; width: auto;" src="https://revature.com/wp-content/themes/revature/imgs/logo-white-color.png">
 
 		<div style="float: right;">
-			<a style="color: white; font-size: 1.5em;" href="../index.html">log-out</a>
+			<a style="color: white; font-size: 1.5em;" href="../index.html" onclick="logout()">log-out</a>
 			<button onclick="location.href = 'employee.html'; localStorage.removeItem('ERS_User');" id="home">HOME</button>
 		</div>
 	</div>
@@ -52,7 +52,7 @@
 
 			<div class="square embeddedItem ord1 oBK">
 				<h1 style="font-size: 6em; line-height: 1em; padding-left: 5%;">Welcome Back</h1>
-				<h3 style="font-size: 3em; padding-left: 5%;">Username</h3>
+				<h3 style="font-size: 3em; padding-left: 5%;" id="username_bot">Username</h3>
 				
 				<p style="font-size: 1.5em; line-height: 1em; padding: 5%;">To Review all Open and Close Reinbursements Click "Review". <br><br>As an employee at Revature you'll be able to sort reimbursements by type or status, view specific reimbursement details, and choose to edit active reinbursement request.</p>
 				
@@ -120,6 +120,61 @@
 
 <!-- Webpage specific JavaScript that's irrelevant to *All* external pages -->
 <script type="text/javascript">
+	
+	var users = [];
+	var user = {};
+	
+	function getUsers(){
+		
+		let trash = {
+			action:"getusers"
+		};
+
+		fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(trash)
+		})
+		.then((response) => response.json())
+		.then((data) => setUsers(data));
+		
+	}
+	
+	function setUsers(myData){
+		
+		users = myData;
+
+		users.forEach(function(each){
+
+			if(each.is_active == "true"){
+				user = each;
+			}
+		});
+		//document.getElementById("username_top").innerText = user.username;
+		document.getElementById("username_bot").innerText = user.username;
+	}
+	
+	function logout(){
+		
+		user.is_active = "false";
+		setActive();
+	}
+	
+	function setActive(){
+		
+		user.action = "setactive";
+		
+		fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(user)
+		})
+		.then((response) => response.text())
+		.then((data) => redirect());
+	}
+	
+	function redirect(){
+		
+		window.location = "../index.html";
+	}
 	
 	function addTable(){
 		document.getElementById("wm").remove();
