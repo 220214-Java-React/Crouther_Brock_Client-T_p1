@@ -30,7 +30,7 @@
 			<form method ="get" action ="http://localhost:8080/mod" target="_blank">
 
 				<label for="rid">Modify RID:</label>
-				<input type="number" id="rid" name="rid">
+				<input type="number" min="1" id="rid" name="rid">
 				<label for="permission">Type "Approved" or "Denied":</label>
 				<input type="text" id="permission" name="permission">
 				<input type="submit" value="Submit">
@@ -81,7 +81,7 @@
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
 
-//getReimbursements();
+getReimbursements();
 
 
 // Changes Approval Status according to Financial Manager's form inputs.
