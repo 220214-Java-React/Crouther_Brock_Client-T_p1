@@ -218,12 +218,14 @@ function getReimbursements(){
 	})
 	.then((response) => response.json())
 	.then((rei) => setDB(rei));	
+	
 }
 
 
 function setDB(arr){
 	db = arr;
 	addRow(db);
+	console.log(arr);
 }
 
 

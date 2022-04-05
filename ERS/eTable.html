@@ -21,19 +21,34 @@
 </head>
 
 
-<body>
+<body onload="getUsers()">
 
+	<div id="mod_panel">
+		<form>
+			<label style="margin:5px;" id="mod_label"></label></br>
+			<input class="mod_inputs" type="text" id="mod_amount" placeholder="amount" size="20">
+			<select id="mod_status">
+				<option value="1">pending</option>
+				<option value="3">cancel</option>
+			</select>
+			<select id="mod_type">
+				<option value="1">lodging</option>
+				<option value="2">travel</option>
+				<option value="3">food</option>
+				<option value="4">other</option>
+			</select>
+			<button type="button" id="mod_panel_submit" onclick="modifyRei()">submit</button>
+		</form>
+	</div>
 	<!-- Web Content Container: General Page Styling Applied -->
-	<div class="fw-box">
+	<div class="fw-box" id="fw_box">
 
 		<div id="modifyNav" style="float: center; text-align: center; padding-top: 2%;">
 			<form>
 
 				<label for="RID">Modify RID:</label>
 				<input type="text" id="RID" name="RID">
-				<button onclick="search(getAllRei());"><img style="height:1.2em; width: auto; padding-top: .3em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"></button>
-				<button onclick="changeStatus(true, db)">Approve</button>
-				<button onclick="changeStatus(false, db)">Deny</button>
+				<button onclick="loadRei()">MOD</button>
 			</form>
 		</div>
 
@@ -42,7 +57,7 @@
 		<div id="sortNav" style="float: center; text-align: center; padding-top: 2%;">
 
 			<p style="font-weight: bold;">SORT BY</p><br>
-			<button onclick="reset(employeeREI(7));">View All</button>
+			<button onclick="reset(employeeREI(user.userid));">View All</button>
 
 			<label style="margin-left: 2em;">Status: </label>
 			<button onclick="sortStatus(eDB, 2);">Approved</button>
@@ -81,8 +96,75 @@
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
 
-employeeREI(7);
 
+
+	var users = [];
+	var user = {};
+	var myStatuses = ["", "pending", "approved", "denied"];
+	var myTypes = ["", "lodging", "travel", "food", "other"];
+	var myRei = {};
+	
+	function getUsers(){
+		
+		let trash = {
+			action:"getusers"
+		};
+
+		fetch("http://localhost:8080/myservlet",{
+				method: "post",
+				body: JSON.stringify(trash)
+		})
+		.then((response) => response.json())
+		.then((data) => setUsers(data));
+		
+	}
+	
+	function setUsers(myData){
+		
+		users = myData;
+
+		users.forEach(function(each){
+
+			console.log(each.is_active);
+			if(each.is_active == "true"){
+				user = each;
+			}
+		});
+		employeeREI(user.userid);
+	}
+	
+	function loadRei(){
+		
+		let myId = parseInt(document.getElementById("RID").value);
+		
+		if(!isNaN(myId)){
+
+			var trash = {
+				reimb_id: myId,
+				action: "getreimb"
+			}
+			console.log(trash);
+			fetch("http://localhost:8080/myservlet",{
+					method: "post",
+					body: JSON.stringify(trash)
+			})
+			.then((response) => response.json())
+			.then((data) => setRei(data));
+		}else{
+			alert("Please enter a valid RID.");
+		}
+	}
+	
+	function setRei(myData){
+		console.log(myData);
+		myRei = myData;
+		document.getElementById("mod_panel").style.display = "block";
+		
+		document.getElementById("mod_amount").value = myData.amount;
+		document.getElementById("mod_status").selectedIndex = parseInt(myData.status_id);
+		document.getElementById("mod_type").selectedIndex = parseInt(myData.type_id);
+	}
+	
 
 // Changes Approval Status according to Financial Manager's form inputs.
 function changeStatus(approved, arr){
@@ -137,5 +219,28 @@ function changeStatus(approved, arr){
 	.thSpacingLg{
 		width: 20em;
 		border-style: solid;
+	}
+	
+
+	
+	.mod_inputs{
+		margin: 5px;
+	}
+	
+	#mod_panel{
+		display: none;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: 1;
+		top: 50%;
+		left: 50%;
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+	
+	#mod_form{
+		width: 100px;
+		background-color: rgba(255,255,255,.5);
 	}
 </style>
