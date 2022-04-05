@@ -58,12 +58,8 @@
 				
 				<div class="center" style="padding-bottom: 5%;">
 					<button onclick="addTable();" style="width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Review</button>
-<<<<<<< HEAD
-					<button onclick="addEdit();" style="margin-left:3em;width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Edit</button>
+					<button onclick="addEdit();" style="margin-left:3em; width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Edit</button>
 					<button onclick="addCreate();" style="margin-left:3em; width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Create</button></div>
-=======
-					<button onclick="createRei();" style="margin-left:3em; width: 4em; font-size: 1.75em; padding: 2% 1% 2% 1%; background-color:#ffa500;">Create</button></div>
->>>>>>> 8b03c06de64fa4ddbac63d4b632e207e3adf5c30
 			</div>
 
 			<div class="embeddedItem square ord2">
@@ -78,30 +74,6 @@
 				<div><a href="https://github.com/220214-Java-React/assignments/blob/main/project-requirements/project-1.md" target="_blank"><p style="width: 100%; text-align: center; font-size: 1.5em;">Learn More</p></a></div>
 			</div>
 
-		</div>
-	</div>
-
-
-	<!-- Create Reinburement -->
-	<div style="text-align: center;">		
-		<div class="fw-box" id="crei" style="display: none; background-color: white; min-height: 54vh;">
-
-			<form style="display: inline-block;  padding-top: 5vh;" method ="post" action ="http://localhost:8080/crei" target="_blank">
-				
-				<label style="float: left;" for="amo">Amount:</label>
-				<input type="number" id="amo" name="amo"><br>
-
-				<label style="float: left;"for="desc">Description:</label>
-				<input type="text" id="desc" name="desc"><br>
-
-				<label style="float: left;" for="aid">Author ID:</label>
-				<input type="number" id="aid" name="aid"><br>
-
-				<label style="float: left;" for="type">Type:</label>
-				<input type="text" id="type" name="type"><br><br>
-
-				<input type="submit" value="Submit">
-			</form> 
 		</div>
 	</div>
 
@@ -140,6 +112,7 @@
 		};
 
 		fetch("http://localhost:8080/myservlet",{
+				header:"admin",
 				method: "post",
 				body: JSON.stringify(trash)
 		})
@@ -173,6 +146,7 @@
 		user.action = "setactive";
 		
 		fetch("http://localhost:8080/myservlet",{
+				header:"admin",
 				method: "post",
 				body: JSON.stringify(user)
 		})
@@ -197,9 +171,16 @@
 		ifrm.setAttribute('src', 'eTable.html');
 	}
 
-	function createRei(){
+	function addCreate(){
 		document.getElementById("wm").remove();
-		document.getElementById("crei").style.display = "inline-block";
+
+		var ifrm = document.createElement('iframe');
+		ifrm.setAttribute('id', 'ifrm');
+
+		var footer = document.getElementById('footer');
+		footer.parentNode.insertBefore(ifrm, footer);
+
+		ifrm.setAttribute('src', 'create.html');
 	}
 
 	function addEdit(){
