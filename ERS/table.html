@@ -27,13 +27,13 @@
 	<div class="fw-box">
 
 		<div id="modifyNav" style="float: center; text-align: center; padding-top: 2%;">
-			<form>
+			<form method ="get" action ="http://localhost:8080/mod" target="_blank">
 
-				<label for="RID">Modify RID:</label>
-				<input type="text" id="RID" name="RID">
-				<button onclick="search(getAllRei());"><img style="height:1.2em; width: auto; padding-top: .3em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"></button>
-				<button onclick="changeStatus(true, db)">Approve</button>
-				<button onclick="changeStatus(false, db)">Deny</button>
+				<label for="rid">Modify RID:</label>
+				<input type="number" min="1" id="rid" name="rid">
+				<label for="permission">Type "Approved" or "Denied":</label>
+				<input type="text" id="permission" name="permission">
+				<input type="submit" value="Submit">
 			</form>
 		</div>
 
@@ -81,7 +81,7 @@
 <!-- Page Specific Internal JavaScript Function (Functions are irrelavant to ALL extneral pages) -->
 <script type="text/javascript">
 
-//getReimbursements();
+getReimbursements();
 
 
 // Changes Approval Status according to Financial Manager's form inputs.

@@ -317,6 +317,8 @@ function whatStatus(stat){
 
 function whatResolver(res){
 	if (res == 0) return "Revature";
+	if (res == 7) return "Admin";
+	if (res == 17) return "Financial Manager";
 	return res;
 }
 
