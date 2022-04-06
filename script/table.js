@@ -212,16 +212,17 @@ var db = [
 
 
 
+// getReimbursements creates a fetch call to retrieve all reimbursements
 function getReimbursements(){
 	fetch("http://localhost:8080/crei",{
 			method: "get",
 	})
 	.then((response) => response.json())
 	.then((rei) => setDB(rei));	
-	
 }
 
 
+// setDB(arr) initializes db variable with fetch data.
 function setDB(arr){
 	db = arr;
 	addRow(db);
@@ -239,6 +240,8 @@ function addRow(arr){
 
 
 
+/** addLine(obj, i) Creates a Table Row Entry for the value stored in the obj 
+ *  with an id i**/
 function addLine(obj, i){
 	
 	let row = document.createElement('tr');
@@ -251,7 +254,7 @@ function addLine(obj, i){
 	console.log(obj.REIMB_ID);
 
 	let Amount = document.createElement('td');
-	Amount.textContent = obj.AMOUNT;
+	Amount.textContent = formattAmount(obj.AMOUNT);
 
 	let Submitted = document.createElement('td');
 	Submitted.textContent = obj.SUBMITTED;
@@ -296,6 +299,19 @@ function addLine(obj, i){
 
 
 
+// Formats Amount Float parameter (a) to US Currency syntax
+function formattAmount(a){
+	var formatter = new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+	});
+
+	return formatter.format(a);
+}
+
+
+
+// Translates number to textual context for type parameter t
 function whatType(t){
 	if (t == 1) return "Lodging";
 	if (t == 2) return "Travel";
@@ -306,6 +322,7 @@ function whatType(t){
 
 
 
+// Translates number to textual context for status parameter stat
 function whatStatus(stat){
 	if (stat == 1) return "Pending";
 	if (stat == 2) return "Approved";
@@ -315,6 +332,7 @@ function whatStatus(stat){
 
 
 
+// Translates number to textual context for resolver parameter res
 function whatResolver(res){
 	if (res == 0) return "Revature";
 	if (res == 7) return "Admin";
@@ -324,6 +342,7 @@ function whatResolver(res){
 
 
 
+// Translates number to textual context for resolved parameter isR
 function isResolved(isR){
 	if (isR == null){return "Pending"};
 	return isR;
@@ -333,7 +352,6 @@ function isResolved(isR){
 
 /** sortStatus(arr, str) clears current table and display only reinbursements  
  *  with a status that matches 'str' parameter from the passed array 'arr' **/
-
 function sortStatus(arr, str){
 	clearTable();
 	let matches = [];
@@ -349,7 +367,6 @@ function sortStatus(arr, str){
 
 /** sortType(arr, str) clears current table and display only reinbursements  
  *  with a type that matches 'str' parameter from the passed array 'arr' **/
-
 function sortType(arr, str){
 	clearTable();
 
@@ -365,7 +382,6 @@ function sortType(arr, str){
 
 
 // reset(arr) clears the entire table and displays all reinbursements
-
 function reset(arr){
 	clearTable();
 	addRow(arr);
@@ -386,6 +402,7 @@ function clearTable(){
 
 
 
+// Optional draft search function
 function search(s){
 
 	clearTable();
@@ -403,6 +420,10 @@ function search(s){
 	}
 }
 
+
+
+/** employeeREI calls setEDB to initialize an employee array of reinbursements
+ *  based on the eyid parameter **/ 
 function employeeREI(eyid){
 	fetch("http://localhost:8080/crei",{
 			method: "get",
@@ -412,6 +433,8 @@ function employeeREI(eyid){
 }
 
 
+
+// Filters reimbursements stored in (arr) for author id's that match (estb)
 function setEDB(arr, estb){
 
 	temp = [];
